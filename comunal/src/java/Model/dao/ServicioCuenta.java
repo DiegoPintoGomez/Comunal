@@ -26,12 +26,12 @@ import java.util.logging.Logger;
  */
 public class ServicioCuenta {
 
-     public Optional<Cuenta> obtenerCuenta(int Cuenta) {
+     public Optional<Cuenta> obtenerCuenta(String Cuenta) {
         Optional<Cuenta> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Cuenta.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setInt(1, Cuenta);
+            stm.setString(1, Cuenta);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = Optional.of(new Cuenta(
@@ -60,11 +60,15 @@ public class ServicioCuenta {
      
        public int insertarCuenta(Cuenta Cuenta) {
         int i=0;
+        int Numcue= this.getNewNumber();
+        String num= String.valueOf(Numcue);
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Cuenta.INSERTAR.obtenerComando());) {
             stm.clearParameters();
-            
-            stm.setString(1,Cuenta.getNum_cuenta());
+            //
+            //generar el numero de la cuenta
+            //
+            stm.setString(1,num);
             
             stm.setInt(2,Cuenta.getTipo_cuenta_id_tipo_cuenta());
             
@@ -166,4 +170,38 @@ public class ServicioCuenta {
         Connection cnx = bd.obtenerConexion();
         return cnx;
     }
+     
+     public int getNewNumber(){
+     Cuenta r= new Cuenta();
+     String SQL= "SELECT * FROM Table ORDER BY ID DESC LIMIT 1";
+     try (Connection cnx = obtenerConexion();
+             PreparedStatement stm=cnx.prepareStatement(SQL)){
+        try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    r =  new Cuenta(
+                            rs.getString("num_cuenta"),
+                            rs.getInt("tipo_cuenta_id_tipo_cuenta"),
+                            rs.getString("cliente_id_cliente"),
+                            rs.getString("moneda_nombre"),
+                            rs.getDate("fecha_creacion"),
+                            rs.getDouble("limite_transferencia_diaria"),
+                            rs.getInt("activa"),
+                            rs.getDouble("saldo_inicial"),
+                            rs.getDate("fecha_ultima_aplicacion"),
+                            rs.getDouble("saldo_final")
+                    );
+                }
+            }
+     }
+     catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+        int i=Integer.valueOf(r.getTipo_cuenta_id_tipo_cuenta());
+        i++;
+        return i;
+     }
 }

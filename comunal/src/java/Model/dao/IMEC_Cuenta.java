@@ -1,7 +1,8 @@
 package Model.dao;
 
 public enum IMEC_Cuenta {
-    INSERTAR("INSERT INTO Cuenta (num_cuenta, "
+    INSERTAR("INSERT INTO Cuenta ("
+            + "num_cuenta, "
             + "tipo_cuenta_id_tipo_cuenta, "
             + "cliente_id_cliente, "
             + "moneda_nombre,"
@@ -16,7 +17,7 @@ public enum IMEC_Cuenta {
     EXCLUIR("DELETE FROM Cuenta WHERE num_cuenta=?; "),
     CONSULTAR("SELECT * FROM Cuenta WHERE num_cuenta=?; "),
     LISTAR("SELECT * FROM Cuenta ; ");
-
+    
     IMEC_Cuenta(String comando) {
         this.comando = comando;
     }
