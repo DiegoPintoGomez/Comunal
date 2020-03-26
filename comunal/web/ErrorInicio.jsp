@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Login
-    Created on : 18/03/2020, 07:55:05 PM
-    Author     : Lenovo
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -16,11 +10,12 @@
 
         <form class="box" action="Login" method="post">
             <h1>Login</h1>
-            <input type="text" id="id" placeholder="Usuario">
-            <input type="password" name="clave" placeholder="Clave">
+            <input type="text" name="" placeholder="Username">
+            <input type="password" name="" placeholder="Password">
             <input type="submit" name="" value="Login">
+            <h3>Usuario o Contraseña incorrectos</h3>
         </form>
+        
 
     </body>
 </html>
-
