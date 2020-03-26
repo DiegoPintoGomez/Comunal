@@ -7,8 +7,9 @@ package servicios;
 
 import Model.dao.ServicioCliente;
 import Model.dao.ServicioUsuario;
-import Model.dao.Usuario;
-import Model.dao.cliente;
+import Objetos.Usuario;
+import Objetos.cliente;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -37,8 +38,8 @@ public class AgregarClienteNuevo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String id = request.getParameter("id");
-            String nombre = request.getParameter("nombre");
+            String id = request.getParameter("Cedula");
+            String nombre = request.getParameter("Nombre");
             String apellidos = request.getParameter("Apellidos");
             String telefono = request.getParameter("Telefono");
             int rol= Integer.parseInt(request.getParameter("Rol"));

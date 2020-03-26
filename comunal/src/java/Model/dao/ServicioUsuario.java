@@ -54,7 +54,7 @@ public class ServicioUsuario {
        public int insertarUsuario(Usuario usu) {
         int i=0;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.INSERTAR.obtenerComando());) {
+            PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.INSERTAR.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1,usu.getId_usuario() );
             stm.setString(2,usu.getClave_acceso());

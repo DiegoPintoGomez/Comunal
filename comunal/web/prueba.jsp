@@ -4,6 +4,8 @@
     Author     : diego
 --%>
 
+<%@page import="Model.dao.Usuario"%>
+<%@page import="Model.dao.ServicioUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%
+               Usuario usu = new Usuario();
+               Cliente cli = new cliente();
+               
+              
+            
+            
+                   out.print();
+        %>
     </body>
 </html>
