@@ -6,6 +6,7 @@
 package Model.dao;
 
 import Objetos.Moneda;
+import Objetos.tipo_cuenta;
 import coneccion.BaseDatos;
 import java.io.IOException;
 import java.sql.Connection;
@@ -23,22 +24,20 @@ import java.util.logging.Logger;
  *
  * @author diego
  */
-public class ServicioMoneda {
+public class ServicioTipo_Cuenta {
 
-     public Optional<Moneda> obtenerMoneda(String Moneda) {
-        Optional<Moneda> r = Optional.empty();
+     public Optional<tipo_cuenta> obtenertipo_cuenta(String tipo_cuenta) {
+        Optional<tipo_cuenta> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.CONSULTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_tipo_cuenta.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1, Moneda);
+            stm.setString(1, tipo_cuenta);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
-                    r = Optional.of(new Moneda(
-                            rs.getString("nombre"),
-                            rs.getString("descripcion"),
-                            rs.getString("simbolo"),
-                            rs.getInt("tipo_cambio_compra"),                            
-                            rs.getInt("tipo_cambio_venta")
+                    r = Optional.of(new tipo_cuenta(
+                            rs.getInt("id_tipo_cuenta"),
+                            rs.getString("descripción"),
+                            rs.getDouble("tasa_interés")
                     ));
                 }
             }
@@ -52,19 +51,16 @@ public class ServicioMoneda {
           return r;
     }
      
-       public int insertarMoneda(Moneda Moneda) {
+       public int insertarTipo_cuenta(tipo_cuenta tipo_cuenta) {
         int i=0;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.INSERTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_tipo_cuenta.INSERTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1,Moneda.getNombre() );
-            stm.setString(2,Moneda.getDescripcion());
-            stm.setString(3,Moneda.getSimbolo());
-            stm.setDouble(4,Moneda.getTipo_cambio_compra());
-            stm.setDouble(4,Moneda.getTipo_cambio_venta());
-             i=stm.executeUpdate();
+            stm.setInt(1, tipo_cuenta.getId_tipo_cuenta());
+            stm.setString(2, tipo_cuenta.getDescripcion());
+            stm.setDouble(3, tipo_cuenta.getTasa_interés());
             
-                
+             i=stm.executeUpdate();
         } catch (IOException
                 | ClassNotFoundException
                 | IllegalAccessException
@@ -75,12 +71,12 @@ public class ServicioMoneda {
         return i;
     }
        
-       public int eliminarMoneda(Moneda usu) {
+       public int eliminartipo_cuenta(tipo_cuenta usu) {
         int i=0;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.EXCLUIR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1,usu.getNombre());
+            stm.setInt(1,usu.getId_tipo_cuenta());
            
              i=stm.executeUpdate();
             
@@ -95,14 +91,14 @@ public class ServicioMoneda {
         return i;
     }
        
-       public List<Moneda> obtenerListaMoneda(String id) {
-        List<Moneda> r = new ArrayList<Moneda>();
+       public List<tipo_cuenta> obtenerListaTipo_cuenta( ) {
+        List<tipo_cuenta> r = new ArrayList<tipo_cuenta>();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.LISTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_tipo_cuenta.LISTAR.obtenerComando());) {
             stm.clearParameters();
             try (ResultSet rs = stm.executeQuery()) {
                 while(rs.next()){
-                    r.add(getMoneda(rs));
+                    r.add(getTipo_cuenta(rs));
                 }
             }
         } catch (IOException
@@ -115,14 +111,12 @@ public class ServicioMoneda {
           return r;
     }
         
-       private Moneda getMoneda(ResultSet rs) throws SQLException{
+       private tipo_cuenta getTipo_cuenta(ResultSet rs) throws SQLException{
         
-            Moneda usu= new Moneda(
-                            rs.getString("nombre"),
-                            rs.getString("descripcion"),
-                            rs.getString("simbolo"),
-                            rs.getDouble("tipo_cambio_compra"),
-                            rs.getDouble("tipo_cambio_venta")
+            tipo_cuenta usu= new tipo_cuenta(
+                            rs.getInt("id_tipo_cuenta"),
+                            rs.getString("descripción"),
+                            rs.getDouble("tasa_interés")
             );
             return usu; 
             
