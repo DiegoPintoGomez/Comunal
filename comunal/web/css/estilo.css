@@ -143,3 +143,44 @@ body{
     align-items: center;
     align-content: center;
 }
+.formulario{
+
+    margin: auto;
+    cellpading: 10px;
+}
+.formulario tr{
+    margin: 5%;
+    
+}
+.Formularios input[type = "text"]{
+    border:0;
+    background: whitesmoke;
+    text-align: center;
+    border: 2px solid white;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+.Formularios label{
+    border:0;
+    background: none;
+    text-align: center;
+    outline: none;
+    color: white;
+
+}
+.Formularios button[type = "submit"], .Formularios button[type = "reset"]{
+    border:0;
+    background: none;
+    text-align: center;
+    border: 2px solid white;
+    padding: 14px 40px;
+    color: white;
+    border-radius: 24px;
+
+}
+
+
+
+
