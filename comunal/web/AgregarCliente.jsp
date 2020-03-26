@@ -20,7 +20,7 @@
 
         <section class="box2">
             <h1 >Abrir Cuenta </h1>
-            <form id="formulario" action="" method="GET" class="Formularios">
+            <form id="formulario" action="AgregarClienteNuevo" method="POST" class="Formularios">
                 <table class="formulario">
 
                     <tbody>
