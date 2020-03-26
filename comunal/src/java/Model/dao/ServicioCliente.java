@@ -22,21 +22,22 @@ import java.util.logging.Logger;
  *
  * @author diego
  */
-public class ServicioUsuario {
+public class ServicioCliente {
 
-     public Optional<Usuario> obtenerUsuario(String id) {
-        Optional<Usuario> r = Optional.empty();
+     public Optional<cliente> obtenerCliente(String id) {
+        Optional<cliente> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.CONSULTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
-                    r = Optional.of(new Usuario(
-                            rs.getString("id_usuario"),
-                            rs.getString("Clave_acceso"),
-                            rs.getInt("clave_vencida"),
-                            rs.getInt("rol")
+                    r = Optional.of(new cliente(
+                            rs.getString("id_cliente"),
+                            rs.getString("usuario_id_usuario"),
+                            rs.getString("apellidos"),
+                            rs.getString("nombre"),
+                            rs.getString("telefono")
                     ));
                 }
             }
@@ -50,15 +51,17 @@ public class ServicioUsuario {
           return r;
     }
      
-       public int insertarUsuario(Usuario usu) {
+       public int insertarCliente(cliente usu) {
         int i=0;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.INSERTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.INSERTAR.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1,usu.getId_usuario() );
-            stm.setString(2,usu.Clave_acceso);
-            stm.setInt(3,usu.clave_vencida);
-            stm.setInt(4,usu.getRol());
+            stm.setString(2,usu.getId_usuario());
+            stm.setString(3,usu.getApellidos());
+            stm.setString(4,usu.getNombre());
+            stm.setString(5,usu.getTelefono());
+           
              i=stm.executeUpdate();
             
                 
@@ -72,10 +75,10 @@ public class ServicioUsuario {
         return i;
     }
        
-       public int eliminarUsuario(Usuario usu) {
+       public int eliminarCliente(cliente usu) {
         int i=0;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.EXCLUIR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.EXCLUIR.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1,usu.getId_usuario() );
            
@@ -92,14 +95,14 @@ public class ServicioUsuario {
         return i;
     }
        
-       public List<Usuario> obtenerListaUsuario(String id) {
-        List<Usuario> r = new ArrayList<Usuario>();
+       public List<cliente> obtenerListaCliente(String id) {
+        List<cliente> r = new ArrayList<cliente>();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.LISTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.LISTAR.obtenerComando());) {
             stm.clearParameters();
             try (ResultSet rs = stm.executeQuery()) {
                 while(rs.next()){
-                    r.add(getUsuario(rs));
+                    r.add(getCliente(rs));
                 }
             }
         } catch (IOException
@@ -112,13 +115,15 @@ public class ServicioUsuario {
           return r;
     }
         
-       private Usuario getUsuario(ResultSet rs) throws SQLException{
+       private cliente getCliente(ResultSet rs) throws SQLException{
         
-            Usuario usu= new Usuario(
-                            rs.getString("id_usuario"),
-                            rs.getString("Clave_acceso"),
-                            rs.getInt("clave_vencida"),
-                            rs.getInt("rol")
+            cliente usu= new cliente(
+                            rs.getString("id_cliente"),
+                            rs.getString("usuario_id_usuario"),
+                            rs.getString("apellidos"),
+                            rs.getString("nombre"),
+                            rs.getString("telefono")
+                    
             );
             return usu; 
             
