@@ -5,6 +5,7 @@
  */
 package Model.dao;
 
+import Objetos.cliente;
 import coneccion.BaseDatos;
 import java.io.IOException;
 import java.sql.Connection;

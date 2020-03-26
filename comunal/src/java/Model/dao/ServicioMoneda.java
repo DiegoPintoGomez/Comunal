@@ -5,6 +5,7 @@
  */
 package Model.dao;
 
+import Objetos.Moneda;
 import Objetos.Usuario;
 import coneccion.BaseDatos;
 import java.io.IOException;
@@ -23,21 +24,22 @@ import java.util.logging.Logger;
  *
  * @author diego
  */
-public class ServicioUsuario {
+public class ServicioMoneda {
 
-     public Optional<Usuario> obtenerUsuario(String id) {
-        Optional<Usuario> r = Optional.empty();
+     public Optional<Moneda> obtenerMoneda(String Moneda) {
+        Optional<Moneda> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.CONSULTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1, id);
+            stm.setString(1, Moneda);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
-                    r = Optional.of(new Usuario(
-                            rs.getString("id_usuario"),
-                            rs.getString("Clave_acceso"),
-                            rs.getInt("clave_vencida"),
-                            rs.getInt("rol")
+                    r = Optional.of(new Moneda(
+                            rs.getString("nombre"),
+                            rs.getString("descripcion"),
+                            rs.getString("simbolo"),
+                            rs.getInt("tipo_cambio_compra"),                            
+                            rs.getInt("tipo_cambio_venta")
                     ));
                 }
             }
@@ -51,15 +53,16 @@ public class ServicioUsuario {
           return r;
     }
      
-       public int insertarUsuario(Usuario usu) {
+       public int insertarMoneda(Moneda Moneda) {
         int i=0;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.INSERTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.INSERTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1,usu.getId_usuario() );
-            stm.setString(2,usu.getClave_acceso());
-            stm.setInt(3,usu.getClave_vencida());
-            stm.setInt(4,usu.getRol());
+            stm.setString(1,Moneda.getNombre() );
+            stm.setString(2,Moneda.getDescripcion());
+            stm.setString(3,Moneda.getSimbolo());
+            stm.setDouble(4,Moneda.getTipo_cambio_compra());
+            stm.setDouble(4,Moneda.getTipo_cambio_venta());
              i=stm.executeUpdate();
             
                 
@@ -73,12 +76,12 @@ public class ServicioUsuario {
         return i;
     }
        
-       public int eliminarUsuario(Usuario usu) {
+       public int eliminarMoneda(Moneda usu) {
         int i=0;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.EXCLUIR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.EXCLUIR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1,usu.getId_usuario() );
+            stm.setString(1,usu.getNombre());
            
              i=stm.executeUpdate();
             
@@ -93,14 +96,14 @@ public class ServicioUsuario {
         return i;
     }
        
-       public List<Usuario> obtenerListaUsuario(String id) {
-        List<Usuario> r = new ArrayList<Usuario>();
+       public List<Moneda> obtenerListaMoneda(String id) {
+        List<Moneda> r = new ArrayList<Moneda>();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Usuario.LISTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Moneda.LISTAR.obtenerComando());) {
             stm.clearParameters();
             try (ResultSet rs = stm.executeQuery()) {
                 while(rs.next()){
-                    r.add(getUsuario(rs));
+                    r.add(getMoneda(rs));
                 }
             }
         } catch (IOException
@@ -113,13 +116,14 @@ public class ServicioUsuario {
           return r;
     }
         
-       private Usuario getUsuario(ResultSet rs) throws SQLException{
+       private Moneda getMoneda(ResultSet rs) throws SQLException{
         
-            Usuario usu= new Usuario(
-                            rs.getString("id_usuario"),
-                            rs.getString("Clave_acceso"),
-                            rs.getInt("clave_vencida"),
-                            rs.getInt("rol")
+            Moneda usu= new Moneda(
+                            rs.getString("nombre"),
+                            rs.getString("descripcion"),
+                            rs.getString("simbolo"),
+                            rs.getDouble("tipo_cambio_compra"),
+                            rs.getDouble("tipo_cambio_venta")
             );
             return usu; 
             
