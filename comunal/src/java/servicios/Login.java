@@ -53,9 +53,10 @@ public class Login extends HttpServlet {
                 dispatcher.forward(request, response);
             }
         } catch (Exception e) {
-
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
+            dispatcher.forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
