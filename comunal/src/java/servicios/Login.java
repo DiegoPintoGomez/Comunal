@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
             String clave = request.getParameter("clave");
             ServicioUsuario su = new ServicioUsuario();
             Optional<Usuario> u = su.obtenerUsuario(id);
-            if (u.get().getClave_acceso() == clave) {
+            if (u.get().getClave_acceso().equals(clave)) {
                 if (u.get().getRol() == 1) {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");
                     dispatcher.forward(request, response);
