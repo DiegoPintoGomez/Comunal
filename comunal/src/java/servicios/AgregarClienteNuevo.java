@@ -5,6 +5,10 @@
  */
 package servicios;
 
+import Model.dao.ServicioCliente;
+import Model.dao.ServicioUsuario;
+import Model.dao.Usuario;
+import Model.dao.cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -32,16 +36,27 @@ public class AgregarClienteNuevo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            String nombre= request.getParameter("nombre");
-        
-        
+        try {
+            String id = request.getParameter("id");
+            String nombre = request.getParameter("nombre");
+            String apellidos = request.getParameter("Apellidos");
+            String telefono = request.getParameter("Telefono");
+            int rol= Integer.parseInt(request.getParameter("Rol"));
+            String clave="clave123";
+            int clave2=1;
+            
+            Usuario u=new Usuario(id,clave,clave2,rol);
+            cliente c=new cliente(id,id,nombre,apellidos,telefono);
+            ServicioUsuario su=new ServicioUsuario();
+            ServicioCliente sc=new ServicioCliente();
+            su.insertarUsuario(u);
+            sc.insertarCliente(c);
+            
+        } catch (Exception e) {
+
         }
-        catch(Exception e){
-        
-        }
-        
-                RequestDispatcher dispatcher = request.getRequestDispatcher(
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(
                 "Login.jsp");
         dispatcher.forward(request, response);
     }

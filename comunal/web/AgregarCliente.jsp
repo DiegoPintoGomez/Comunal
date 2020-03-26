@@ -30,7 +30,7 @@
                                 <label for="cédula"><strong>Cédula:</strong></label>
                             </td>
                             <td>
-                                <input type="text" id="Cedula" name="nombre" size="25" />
+                                <input type="text" id="Cedula" name="Cedula" size="25" />
                             </td>
                         </tr>
                         <tr>
@@ -39,7 +39,7 @@
 
                             </td>
                             <td>
-                                <input type="text" id="Nombre" name="nombre" size="25" />
+                                <input type="text" id="Nombre" name="Nombre" size="25" />
                             </td>
                         </tr>
                         <tr>
@@ -47,7 +47,7 @@
                                 <label for="Apellidos"><strong>Apellidos:</strong></label>
                             </td>
                             <td>
-                                <input type="text" id="Apellidos" name="nombre" size="25" />
+                                <input type="text" id="Apellidos" name="Apellidos" size="25" />
                             </td>
                         </tr>
                         <tr>
@@ -55,7 +55,7 @@
                                 <label for="Telefono"><strong>Telefono</strong></label>
                             </td>
                             <td>
-                                <input type="text" id="Telefono" name="nombre" size="25" />
+                                <input type="text" id="Telefono" name="Telefono" size="25" />
                             </td>
                         </tr>
                         <tr>
