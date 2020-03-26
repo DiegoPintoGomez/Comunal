@@ -1,0 +1,145 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #ffffff;
+}
+.box{
+    width: 300px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #191919;
+    text-align: center;
+}
+.box h1{
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.box input[type = "text"],.box input[type = "password"]{
+    border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+    width: 280px;
+    border-color: #2ecc71;
+}
+.box input[type = "submit"]{
+    border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+.box input[type = "submit"]:hover{
+    background: #2ecc71;
+}
+
+.box{
+    width: 300px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #191919;
+    text-align: center;
+}
+.box2{
+    width: 80%;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #34495e;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
+
+.box2 h1{
+    color: white;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.titulo th {
+    border: 1px solid white;
+    padding: 4px 16px 4px 16px;
+    background-color: white;
+
+}
+.box2 h5{
+    color: white;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+.tablaM {
+    margin: auto;
+    border: 3px solid gray;
+    border-collapse: collapse;
+}
+
+.tablaM th,
+.tablaM td {
+    border: 1px solid grey;
+    padding: 4px 8px 4px 8px;
+    text-align: center;
+}
+
+.tablaM tr:nth-child(even) {
+    background-color: #cccccc;
+}
+.tablaM tr:nth-child(odd){
+    background-color: whitesmoke;
+}
+
+.tablaM th,
+.tablaM .columnaEspecial {
+    background-color: grey;
+    color: beige;
+}
+#menu {
+    padding: 0;
+}
+#menu li {
+    display: inline;
+}
+#menu li a {
+    font-family: Arial;
+    font-size: 15px;
+    text-decoration: none;
+    float: left;
+    padding: 10px;
+    color: #fff;
+}
+.Encabezado{
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    background: #34495e;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
