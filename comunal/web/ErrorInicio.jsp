@@ -10,8 +10,8 @@
 
         <form class="box" action="Login" method="post">
             <h1>Login</h1>
-            <input type="text" name="" placeholder="Username">
-            <input type="password" name="" placeholder="Password">
+            <input type="text" name="id" placeholder="Username">
+            <input type="password" name="clave" placeholder="Password">
             <input type="submit" name="" value="Login">
             <h3>Usuario o Contraseña incorrectos</h3>
         </form>

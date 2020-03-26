@@ -14,9 +14,9 @@
     </head>
     <body>
 
-        <form class="box" action="Login" method="post">
+        <form class="box" action="Login" method="POST">
             <h1>Login</h1>
-            <input type="text" id="id" placeholder="Usuario">
+            <input type="text" name="id" placeholder="Usuario">
             <input type="password" name="clave" placeholder="Clave">
             <input type="submit" name="" value="Login">
         </form>
