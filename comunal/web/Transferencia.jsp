@@ -3,17 +3,15 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Inicio</title>
+        <title>Abrir Cuenta</title>
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-
         <%@ include file="Menu.jsp"%>
         <section class="box2">
-            <h1 >Lista de Cuentas: </h1>
+            <h1>Transferencia</h1>
         </section>
+
+
     </body>
 </html>
-
-
-

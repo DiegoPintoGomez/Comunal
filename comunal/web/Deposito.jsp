@@ -10,7 +10,14 @@
         <%@ include file="Menu.jsp"%>
 
         <section class="box2">
-            <h1 >Retiro</h1>
+            <h1>Deposito</h1>
+            <form id="Deposito" action="GenerarDeposito" method="POST" class="Formularios">
+                
+                
+                
+            </form>
+            
+            <strong>Buscar Por:</strong>
 
 
         </section>
