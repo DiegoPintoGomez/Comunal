@@ -18,6 +18,85 @@
         %>
         <input id="cuentaIngresada" onkeyup="numeroCuentaR(<%=formato(clintes)%>)">
         <input id="campoCedula">
+        
+         <div class="modal fade" id="Modal4"   tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <h5 class="modal-title" id="ModalLabel">Transferencia</h5>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="formT" action="TransferirCajero">
+                        <table class="table table-bordered table-striped mb-0" id="PerfilTable">
+                            <thead>
+                                <tr>
+                                    <th>Cedula de Cuenta Depositante</th>
+                                    <th>
+                                        <input class="form-control" onkeyup="numeroCedulaCuentaTD(<%=formato(listaC)%>)" placeholder="Numero de Cuenta" id="CedulaTD" name="CedulaTD" >
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Numero de Cuenta Depositante</th>
+                                    <th >
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <button class="btn1 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cuentas</button>
+                                                <div class="dropdown-menu" id="menuTD">
+                                                </div>
+                                            </div>
+                                            <input type="text" required="true" onkeyup="numeroCuentaTD(<%=formato(listaC)%>)" id="CuentaTD" name="CuentaTD" class="form-control" aria-label="Cuenta">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th><label>Cedula de Cliente a Depositar</label> </th>
+                                    <th>  <input type="text" name="despositarCedula" onkeyup="numeroCedulaCuentaT(<%=formato(listaC)%>)" required="true" class="form-control" placeholder="Cedula de Cliente" name="CedulaT" id="CedulaT"></h3>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th><label>Numero de Cuenta a Depositar</label> </th>
+                                    <th >
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <button class="btn1 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cuentas</button>
+                                                <div class="dropdown-menu" id="menuTT">
+                                                </div>
+                                            </div>
+                                            <input type="text" required="true" onkeyup="numeroCuentaT(<%=formato(listaC)%>)" id="CuentaT" name="CuentaT" class="form-control" aria-label="Cuenta">
+                                        </div>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th><label>Monto a depositar</label> </th>
+                                    <th>   <input type="number" min="0" name="montoT" class="form-control" required="true"  placeholder="0.0" id="montoT" >
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th scope="col">Detalle</th>
+                                    <th > <textarea rows="2" name="DetalleT" required="true" cols="30"></textarea> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="text-align: center;"colspan="2">
+
+                                        <button type="submit" class="btn btn-default"><img  src="../assets/imagenes/aceptar.png" style=" width: 50px; height: 50px;"></button>
+                                        <button class="btn btn-default" data-dismiss="modal" aria-label="Close"><img  src="../assets/imagenes/cancelar.png" style=" width: 50px; height: 50px;"></button>
+
+                                    </th>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </form>
+
+                </div>
+            </div>
+        </div>
     </body>
     <%!
         public String formato(ArrayList<cliente> listaCli) {
