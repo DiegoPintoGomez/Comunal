@@ -5,15 +5,18 @@
  */
 package servicios;
 
+import Model.dao.ServicioCliente;
 import Model.dao.ServicioCuenta;
 import Model.dao.ServicioTipo_Cuenta;
 import Model.dao.ServicioUsuario;
 import Objetos.Cuenta;
 import Objetos.Usuario;
+import Objetos.cliente;
 import Objetos.tipo_cuenta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,8 +41,10 @@ public class AgregarCuenta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         int Cliente =Integer.valueOf( request.getParameter("Cliente"));
-        String cedula = request.getParameter("Cedula");
+        String cedula = request.getParameter("cedula");
+        
         if(Cliente==1){
         String nombre = request.getParameter("Nombre");
         String apellidos = request.getParameter("Apellidos");
@@ -49,6 +54,15 @@ public class AgregarCuenta extends HttpServlet {
         ServicioUsuario su=new ServicioUsuario();
         Usuario usu = new Usuario(cedula,clave,clave2,2);
         su.insertarUsuario(usu);
+        
+        cliente cli = new cliente();
+        cli.setId_usuario(cedula);
+        cli.setId_cliente(cedula);
+        cli.setApellidos(apellidos);
+        cli.setNombre(nombre);
+        cli.setTelefono(telefono);
+        ServicioCliente SC = new ServicioCliente();
+        SC.insertarCliente(cli);
         }
         
         double limite = Integer.valueOf(request.getParameter("limite"));
@@ -60,6 +74,7 @@ public class AgregarCuenta extends HttpServlet {
         
         Optional<tipo_cuenta> tc = STC.obtenertipo_cuenta(tipo);
         
+        
         ServicioCuenta SC= new ServicioCuenta();
         
         Cuenta cu = new Cuenta();
@@ -68,7 +83,14 @@ public class AgregarCuenta extends HttpServlet {
         cu.setMoneda_nombre(moneda);
         cu.setTipo_cuenta_id_tipo_cuenta(tipo);
         
-       SC.insertarCuenta(cu);
+        SC.insertarCuenta(cu);
+       
+       
+       
+       
+       
+       RequestDispatcher dispatcher = request.getRequestDispatcher("AgregarCuenta.jsp");
+                        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

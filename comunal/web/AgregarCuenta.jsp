@@ -32,8 +32,8 @@
                 <input type="radio" name="Cliente" id="cliente" value="0" onchange="javascript:showContent()" checked />
                 <label for="cliente">Cliente</label>
 
-                <div id="id" style=" display: block; margin: 5px;">
-                    <label for="Nombre"><strong>Cedula cliente:</strong></label>
+                <div>
+                    <label for="Nombre">Cedula cliente:</label>
                     <input type="text" id="cedula" name="cedula" size="25" />
                 </div>
                 </td>
@@ -45,14 +45,8 @@
 
                         <tbody>
 
-                            <tr>
-                                <td>
-                                    <label for="cédula"><strong>Cédula:</strong></label>
-                                </td>
-                                <td>
-                                    <input type="text" id="Cedula" name="Cedula" size="25" />
-                                </td>
-                            </tr>
+                            
+                            
                             <tr>
                                 <td>
                                     <label for="Nombre"><strong>Nombre</strong></label>
@@ -62,6 +56,7 @@
                                     <input type="text" id="Nombre" name="Nombre" size="25" />
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <td>
                                     <label for="Apellidos"><strong>Apellidos:</strong></label>
