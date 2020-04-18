@@ -16,7 +16,8 @@ public enum IMEC_Cuenta {
     //MODIFICAR("UPDATE estudiante SET apellidos=?, nombre=? WHERE id=?; "),
     EXCLUIR("DELETE FROM Cuenta WHERE num_cuenta=?; "),
     CONSULTAR("SELECT * FROM Cuenta WHERE num_cuenta=?; "),
-    LISTAR("SELECT * FROM Cuenta ; ");
+    LISTAR("SELECT * FROM Cuenta WHERE cliente_id_cliente=?; ");
+    
     
     IMEC_Cuenta(String comando) {
         this.comando = comando;

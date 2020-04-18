@@ -17,11 +17,8 @@
         <p><%= usuario + "    " + nombre+" "%><a href="Cerrar">Cerrar Sesion</a></p>
     </div>
     <ul id="menu">
-        <li><a href="InicialCajero.jsp">Inicio</a></li>
-        <li><a href="AgregarCuenta.jsp">Crear Cuenta</a></li>
-        <li><a href="AgregarCliente.jsp">Agregar Cliente</a></li>
-        <li><a href="Retiro.jsp">Retiros</a></li>
-        <li><a href="Deposito.jsp">Depositos</a></li>
-        <li><a href="Transferencia.jsp">Transferencias</a></li>
+        <li><a href="ConsultaMovimientos.jsp">Consulta Movimeintos</a></li>
+        <li><a href="Transferencia.jsp">Trasnferencias</a></li>
+        <li><a href="VincularFavoritos.jsp">Vincular a Favoritos</a></li>
     </ul>
 </section>

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Lenovo
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
+@WebServlet(name = "Login", urlPatterns = {"/Login", "/Cerrar"})
 public class Login extends HttpServlet {
 
     /**
@@ -38,32 +38,51 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String id = request.getParameter("id");
-            String clave = request.getParameter("clave");
-            ServicioUsuario su = new ServicioUsuario();
-            Optional<Usuario> u = su.obtenerUsuario(id);
-            if (u.get().getClave_acceso().equals(clave)) {
-                if (u.get().getRol() == 1) {
-                    HttpSession sesion = request.getSession(true);
-                    sesion.setAttribute("usuario", id);
-                    ServicioCliente sc = new ServicioCliente();
-                    Optional<cliente> c = sc.obtenerCliente_id_usuario(id);
-                    sesion.setAttribute("nombre", c.get().getNombre());
-                    sesion.setAttribute("apellidos", c.get().getApellidos());
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");
-                    dispatcher.forward(request, response);
+        if (request.getServletPath().equals("/Cerrar")) {
+            HttpSession sesion = request.getSession();
+            sesion.invalidate();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            try {
+                String id = request.getParameter("id");
+                String clave = request.getParameter("clave");
+                ServicioUsuario su = new ServicioUsuario();
+                Optional<Usuario> u = su.obtenerUsuario(id);
+                if (u.get().getClave_acceso().equals(clave)) {
+                    if (u.get().getRol() == 1) {
+                        HttpSession sesion = request.getSession(true);
+                        sesion.setAttribute("usuario", id);
+                        ServicioCliente sc = new ServicioCliente();
+                        Optional<cliente> c = sc.obtenerCliente_id_usuario(id);
+                        sesion.setAttribute("nombre", c.get().getNombre());
+                        sesion.setAttribute("apellidos", c.get().getApellidos());
+
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                    if (u.get().getRol() == 2) {
+                        HttpSession sesion = request.getSession(true);
+                        sesion.setAttribute("usuario", id);
+                        ServicioCliente sc = new ServicioCliente();
+                        Optional<cliente> c = sc.obtenerCliente_id_usuario(id);
+                        sesion.setAttribute("nombre", c.get().getNombre());
+                        sesion.setAttribute("apellidos", c.get().getApellidos());
+                        sesion.setAttribute("Cliente", c.get().getId_cliente());
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCliente.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                        dispatcher.forward(request, response);
+                    }
                 } else {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
                     dispatcher.forward(request, response);
                 }
-            } else {
+            } catch (Exception e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
                 dispatcher.forward(request, response);
             }
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
-            dispatcher.forward(request, response);
         }
 
     }

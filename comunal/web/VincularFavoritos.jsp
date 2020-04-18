@@ -8,7 +8,7 @@
     </head>
     <body>
 
-        <%@ include file="Menu.jsp"%>
+        <%@ include file="MenuCliente.jsp"%>
         <section class="box2">
             
         </section>

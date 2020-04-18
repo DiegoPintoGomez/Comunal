@@ -7,7 +7,7 @@
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <%@ include file="Menu.jsp"%>
+        <%@ include file="MenuCliente.jsp"%>
         <section class="box2">
             <h1>Transferencia</h1>
         </section>

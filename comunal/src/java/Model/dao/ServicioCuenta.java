@@ -124,7 +124,9 @@ public class ServicioCuenta {
         List<Cuenta> r = new ArrayList<Cuenta>();
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Cuenta.LISTAR.obtenerComando());) {
+            
             stm.clearParameters();
+            stm.setString(1,id);
             try (ResultSet rs = stm.executeQuery()) {
                 while(rs.next()){
                     r.add(getCuenta(rs));
