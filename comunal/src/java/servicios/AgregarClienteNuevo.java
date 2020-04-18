@@ -42,12 +42,13 @@ public class AgregarClienteNuevo extends HttpServlet {
             String nombre = request.getParameter("Nombre");
             String apellidos = request.getParameter("Apellidos");
             String telefono = request.getParameter("Telefono");
+            String Usuario = request.getParameter("Usuario");
             int rol= Integer.parseInt(request.getParameter("Rol"));
             String clave="clave123";
             int clave2=1;
             
-            Usuario u=new Usuario(id,clave,clave2,rol);
-            cliente c=new cliente(id,id,nombre,apellidos,telefono);
+            Usuario u=new Usuario(Usuario,clave,clave2,rol);
+            cliente c=new cliente(id,Usuario,nombre,apellidos,telefono);
             ServicioUsuario su=new ServicioUsuario();
             ServicioCliente sc=new ServicioCliente();
             su.insertarUsuario(u);

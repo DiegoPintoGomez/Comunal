@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
                     HttpSession sesion = request.getSession(true);
                     sesion.setAttribute("usuario", id);
                     ServicioCliente sc = new ServicioCliente();
-                    Optional<cliente> c = sc.obtenerCliente(id);
+                    Optional<cliente> c = sc.obtenerCliente_id_usuario(id);
                     sesion.setAttribute("nombre", c.get().getNombre());
                     sesion.setAttribute("apellidos", c.get().getApellidos());
                     RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");

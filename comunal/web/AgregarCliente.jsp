@@ -24,6 +24,16 @@
                                 <input type="text" id="Cedula" name="Cedula" size="25" />
                             </td>
                         </tr>
+                        
+                        <tr>
+                            <td>
+                                <label for="Usuario"><strong>Usuario:</strong></label>
+                            </td>
+                            <td>
+                                <input type="text" id="Usuario" name="Usuario" size="25" />
+                            </td>
+                        </tr>
+                        
                         <tr>
                             <td>
                                 <label for="Nombre"><strong>Nombre</strong></label>

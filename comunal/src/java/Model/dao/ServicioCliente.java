@@ -84,7 +84,7 @@ public class ServicioCliente {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.INSERTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1,usu.getId_usuario() );
+            stm.setString(1,usu.getId_cliente() );
             stm.setString(2,usu.getId_usuario());
             stm.setString(3,usu.getApellidos());
             stm.setString(4,usu.getNombre());
