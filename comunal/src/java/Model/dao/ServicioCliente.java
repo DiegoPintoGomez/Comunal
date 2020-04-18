@@ -28,7 +28,7 @@ public class ServicioCliente {
      public Optional<cliente> obtenerCliente(String id) {
         Optional<cliente> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.CONSULTAR.obtenerComando());) {
+            PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
             try (ResultSet rs = stm.executeQuery()) {
@@ -43,6 +43,33 @@ public class ServicioCliente {
                 }
             }
         } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+          return r;
+    }
+     
+     public Optional<cliente> obtenerCliente_id_usuario(String id){
+         Optional<cliente> r = Optional.empty();
+         try (Connection cnx = obtenerConexion();
+         PreparedStatement stm = cnx.prepareStatement(IMEC_Cliente.OBTENER.obtenerComando());) {
+            stm.clearParameters();
+            stm.setString(1, id);
+             try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    r = Optional.of(new cliente(
+                            rs.getString("id_cliente"),
+                            rs.getString("usuario_id_usuario"),
+                            rs.getString("apellidos"),
+                            rs.getString("nombre"),
+                            rs.getString("telefono")
+                    ));
+                }
+            }
+      } catch (IOException
                 | ClassNotFoundException
                 | IllegalAccessException
                 | InstantiationException
