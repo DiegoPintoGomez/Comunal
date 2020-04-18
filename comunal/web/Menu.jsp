@@ -2,8 +2,11 @@
 <%@page session="true"%>
 <%    
 HttpSession sesion = request.getSession();
+String usuario="";
 if(sesion.getAttribute("usuario")!=null){
-String usuario=sesion.getAttribute("usuario").toString();
+usuario=sesion.getAttribute("usuario").toString();
+}else{
+    out.print("<stript>location.replace('Login.jsp');</stript>");
 }
 %>
 

@@ -132,6 +132,15 @@ body{
 #menu li {
     display: inline;
 }
+#datos{
+    text-align: right;
+    font-family: Arial;
+    font-size: 15px;
+    text-decoration: none;
+    float: right;
+    padding: 10px;
+    color: #fff;
+}
 #menu li a {
     font-family: Arial;
     font-size: 15px;
