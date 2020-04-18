@@ -3,8 +3,10 @@
 <%    
 HttpSession sesion = request.getSession();
 String usuario="";
+String nombre="";
 if(sesion.getAttribute("usuario")!=null){
 usuario=sesion.getAttribute("usuario").toString();
+nombre=sesion.getAttribute("nombre").toString()+sesion.getAttribute("apellidos").toString();;
 }else{
     out.print("<stript>location.replace('Login.jsp');</stript>");
 }
@@ -12,7 +14,7 @@ usuario=sesion.getAttribute("usuario").toString();
 
 <section class="Encabezado">
     <div id="datos">
-        <p><%= usuario%></p>
+        <p><%= usuario+"    "+nombre%></p>
     </div>
     <ul id="menu">
         <li><a href="InicialCajero.jsp">Inicio</a></li>
