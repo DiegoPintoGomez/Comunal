@@ -25,7 +25,7 @@
 
         <section class="box2">
             <h1>Abrir Cuenta </h1>
-            <form id="formulario" action="AgregarClienteNuevo" method="POST" class="Formularios">
+            <form id="formulario" action="AgregarCuenta" method="POST" class="Formularios">
 
                 <input type="radio" name="Cliente" id="nuevo" value="1" onchange="javascript:showContent()" />
                 <label for="cliente">Nuevo</label>
@@ -94,7 +94,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="moneda"><strong>Provincia:</strong></label>
+                                <label for="moneda"><strong>Moneda:</strong></label>
                             </td>
                             <td>
                                 <select id="moneda" name="moneda" size="1">
@@ -102,6 +102,16 @@
                                     <option value="EUR">Euros</option>
                                     <option value="USD">Dolar EEUU</option>
                                 </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <input type="radio" name="TipoCuenta" id="TipoCuenta" value="1"  />
+                            <label for="TipoCuenta">ahorro</label>
+                            </td>
+                            <td>
+                            <input type="radio" name="TipoCuenta" id="TipoCuenta" value="0" checked />
+                            <label for="TipoCuenta">corriente</label>
                             </td>
                         </tr>
                     </tbody>

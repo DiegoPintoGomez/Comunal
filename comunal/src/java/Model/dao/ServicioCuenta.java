@@ -90,7 +90,6 @@ public class ServicioCuenta {
             
             i=stm.executeUpdate();
             
-                
         } catch (IOException
                 | ClassNotFoundException
                 | IllegalAccessException

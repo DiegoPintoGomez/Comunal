@@ -37,6 +37,16 @@ public class Cuenta {
     }
 
     public Cuenta() {
+    num_cuenta="";
+    tipo_cuenta_id_tipo_cuenta=0;
+    cliente_id_cliente="";
+    moneda_nombre="";
+    fecha_creacion=new Date(System.currentTimeMillis());
+    limite_transferencia_diaria=1000000.00;
+    activa=1;
+    saldo_inicial=0.0;
+    fecha_ultima_aplicacion=new Date(System.currentTimeMillis());
+    saldo_final=0.0;
     }
 
     public String getNum_cuenta() {

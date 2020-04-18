@@ -5,8 +5,15 @@
  */
 package servicios;
 
+import Model.dao.ServicioCuenta;
+import Model.dao.ServicioTipo_Cuenta;
+import Model.dao.ServicioUsuario;
+import Objetos.Cuenta;
+import Objetos.Usuario;
+import Objetos.tipo_cuenta;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Optional;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,19 +38,37 @@ public class AgregarCuenta extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AgregarCuenta</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AgregarCuenta at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        int Cliente =Integer.valueOf( request.getParameter("Cliente"));
+        String cedula = request.getParameter("Cedula");
+        if(Cliente==1){
+        String nombre = request.getParameter("Nombre");
+        String apellidos = request.getParameter("Apellidos");
+        String telefono = request.getParameter("Telefono");
+        String clave="clave123";
+        int clave2=1;
+        ServicioUsuario su=new ServicioUsuario();
+        Usuario usu = new Usuario(cedula,clave,clave2,2);
+        su.insertarUsuario(usu);
         }
+        
+        double limite = Integer.valueOf(request.getParameter("limite"));
+        String moneda = request.getParameter("moneda");
+        
+        int tipo =Integer.valueOf( request.getParameter("TipoCuenta"));
+        
+        ServicioTipo_Cuenta  STC= new ServicioTipo_Cuenta();
+        
+        Optional<tipo_cuenta> tc = STC.obtenertipo_cuenta(tipo);
+        
+        ServicioCuenta SC= new ServicioCuenta();
+        
+        Cuenta cu = new Cuenta();
+        cu.setCliente_id_cliente(cedula);
+        cu.setLimite_transferencia_diaria(limite);
+        cu.setMoneda_nombre(moneda);
+        cu.setTipo_cuenta_id_tipo_cuenta(tipo);
+        
+       SC.insertarCuenta(cu);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,6 +98,7 @@ public class AgregarCuenta extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

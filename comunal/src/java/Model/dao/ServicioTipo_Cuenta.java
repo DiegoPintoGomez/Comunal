@@ -26,12 +26,12 @@ import java.util.logging.Logger;
  */
 public class ServicioTipo_Cuenta {
 
-     public Optional<tipo_cuenta> obtenertipo_cuenta(String tipo_cuenta) {
+     public Optional<tipo_cuenta> obtenertipo_cuenta(int tipo_cuenta) {
         Optional<tipo_cuenta> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_tipo_cuenta.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1, tipo_cuenta);
+            stm.setInt(1, tipo_cuenta);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = Optional.of(new tipo_cuenta(
