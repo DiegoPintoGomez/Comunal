@@ -60,7 +60,7 @@ public class ServicioCuenta {
      
        public int insertarCuenta(Cuenta Cuenta) {
         int i=0;
-        int Numcue= this.getNewNumber();
+        int Numcue= this.getNewNumber()+1;
         String num= String.valueOf(Numcue);
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Cuenta.INSERTAR.obtenerComando());) {
@@ -95,7 +95,7 @@ public class ServicioCuenta {
                 | IllegalAccessException
                 | InstantiationException
                 | SQLException ex) {
-            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+           System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
         return i;
     }
@@ -172,7 +172,7 @@ public class ServicioCuenta {
      
      public int getNewNumber(){
      Cuenta r= new Cuenta();
-     String SQL= "SELECT * FROM Table ORDER BY ID DESC LIMIT 1";
+     String SQL= "SELECT * FROM cuenta ORDER BY num_cuenta DESC LIMIT 1";
      try (Connection cnx = obtenerConexion();
              PreparedStatement stm=cnx.prepareStatement(SQL)){
         try (ResultSet rs = stm.executeQuery()) {
@@ -189,6 +189,7 @@ public class ServicioCuenta {
                             rs.getDate("fecha_ultima_aplicacion"),
                             rs.getDouble("saldo_final")
                     );
+                    
                 }
             }
      }
@@ -199,8 +200,8 @@ public class ServicioCuenta {
                 | SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-        int i=Integer.valueOf(r.getTipo_cuenta_id_tipo_cuenta());
-        i++;
+        int i=Integer.valueOf(r.getNum_cuenta());
+        ++i;
         return i;
      }
 }
