@@ -5,8 +5,10 @@
  */
 package servicios;
 
+import Model.dao.ServicioCliente;
 import Model.dao.ServicioUsuario;
 import Objetos.Usuario;
+import Objetos.cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,6 +45,12 @@ public class Login extends HttpServlet {
             Optional<Usuario> u = su.obtenerUsuario(id);
             if (u.get().getClave_acceso().equals(clave)) {
                 if (u.get().getRol() == 1) {
+                    HttpSession sesion = request.getSession(true);
+                    sesion.setAttribute("usuario", id);
+                    ServicioCliente sc = new ServicioCliente();
+                    Optional<cliente> c = sc.obtenerCliente(id);
+                    sesion.setAttribute("nombre", c.get().getNombre());
+                    sesion.setAttribute("apellidos", c.get().getApellidos());
                     RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");
                     dispatcher.forward(request, response);
                 } else {

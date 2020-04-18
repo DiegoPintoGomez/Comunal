@@ -12,16 +12,30 @@
         <section class="box2">
             <h1>Deposito</h1>
             <form id="Deposito" action="GenerarDeposito" method="POST" class="Formularios">
-                
-                
-                
+                <table class="formulario">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Buscar Por:</strong>
+                            </td>
+                            <td>
+                                <input type="text" id="valor" name="valor" size="25" />
+                            </td>
+                            <td>
+                                <select id="Dato" name="Dato" size="1">
+                                    <option value="Cedula" selected="true">Cedula Cliente</option>
+                                    <option value="Numero">Numero de Cuenta</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <button type="submit">Buscar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
-            
-            <strong>Buscar Por:</strong>
-
-
         </section>
-
-
     </body>
 </html>

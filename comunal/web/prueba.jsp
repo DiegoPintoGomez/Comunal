@@ -19,11 +19,11 @@ var miSelect=document.getElementById("miSelect");
 // Creamos un objeto option
 var miOption=document.createElement("option");
  
-// AÃ±adimos las propiedades value y label
+// Añadimos las propiedades value y label
 miOption.setAttribute("value","1");
 miOption.setAttribute("label","casa");
  
-// AÃ±adimos el option al select
+// Añadimos el option al select
 miSelect.appendChild(miOption);
  
  
