@@ -43,26 +43,36 @@ public class AgregarCuenta extends HttpServlet {
             throws ServletException, IOException {
         
         int Cliente =Integer.valueOf( request.getParameter("Cliente"));
-        String cedula = request.getParameter("cedula");
+        String Cedula = request.getParameter("Cedula");
         
         if(Cliente==1){
-        String nombre = request.getParameter("Nombre");
-        String apellidos = request.getParameter("Apellidos");
-        String telefono = request.getParameter("Telefono");
-        String clave="clave123";
-        int clave2=1;
-        ServicioUsuario su=new ServicioUsuario();
-        Usuario usu = new Usuario(cedula,clave,clave2,2);
-        su.insertarUsuario(usu);
+            int clave2=1;
+            
+            String clave="clave123";
+           String usuario =request.getParameter("Usuario");
+           
+            Usuario usu = new Usuario(usuario,clave,clave2,2);
+            
+            ServicioUsuario su=new ServicioUsuario();
+            
+            su.insertarUsuario(usu);
+            
+            cliente cli = new cliente();
+            cli.setId_usuario(usuario);
+            
+            
+            String nombre = request.getParameter("Nombre");
+            String apellidos = request.getParameter("Apellidos");
+            String telefono = request.getParameter("Telefono");
+            
         
-        cliente cli = new cliente();
-        cli.setId_usuario(cedula);
-        cli.setId_cliente(cedula);
-        cli.setApellidos(apellidos);
-        cli.setNombre(nombre);
-        cli.setTelefono(telefono);
-        ServicioCliente SC = new ServicioCliente();
-        SC.insertarCliente(cli);
+            cli.setId_cliente(Cedula);
+            cli.setApellidos(apellidos);
+            cli.setNombre(nombre);
+            cli.setTelefono(telefono);
+        
+            ServicioCliente SC = new ServicioCliente();
+            SC.insertarCliente(cli);
         }
         
         double limite = Integer.valueOf(request.getParameter("limite"));
@@ -74,20 +84,16 @@ public class AgregarCuenta extends HttpServlet {
         
         Optional<tipo_cuenta> tc = STC.obtenertipo_cuenta(tipo);
         
-        
         ServicioCuenta SC= new ServicioCuenta();
         
         Cuenta cu = new Cuenta();
-        cu.setCliente_id_cliente(cedula);
+        
+        cu.setCliente_id_cliente(Cedula);
         cu.setLimite_transferencia_diaria(limite);
         cu.setMoneda_nombre(moneda);
         cu.setTipo_cuenta_id_tipo_cuenta(tipo);
         
         SC.insertarCuenta(cu);
-       
-       
-       
-       
        
        RequestDispatcher dispatcher = request.getRequestDispatcher("AgregarCuenta.jsp");
                         dispatcher.forward(request, response);
