@@ -5,6 +5,8 @@
  */
 package servicios;
 
+import Model.dao.ServicioFavorita;
+import Objetos.favorita;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,14 +36,16 @@ public class VincularCuentas extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getServletPath().equals("/VincularCuentas")) {
-        try {
-                String id = request.getParameter("cuenta");
-//                String clave = request.getParameter("clave");
-//                ServicioUsuario su = new ServicioUsuario();
-//                Optional<Usuario> u = su.obtenerUsuario(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
+            try {
+                String Cuenta = request.getParameter("cuenta");
+                HttpSession sesion = request.getSession();
+                String id = sesion.getAttribute("Cliente").toString();
+                favorita f = new favorita(id,Cuenta);
+                ServicioFavorita sf=new ServicioFavorita();
+                sf.insertarfavorita(f);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
                 dispatcher.forward(request, response);
-        } catch (Exception e) {
+            } catch (Exception e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
                 dispatcher.forward(request, response);
             }

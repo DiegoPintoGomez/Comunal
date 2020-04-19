@@ -167,6 +167,14 @@ body{
     margin: 5%;
     
 }
+.formulario label{
+        border:0;
+    background: none;
+    text-align: center;
+    outline: none;
+    color: white;
+    
+}
 .Formularios input[type = "text"], select{
     border:0;
     background: whitesmoke;

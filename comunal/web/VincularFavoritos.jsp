@@ -11,12 +11,12 @@
         <%@ include file="MenuCliente.jsp"%>
         <section class="box2">
             <h1>Vincular Cuenta a Favoritos</h1>
-            <form id="Deposito" action="VincularCuentas" method="POST" class="Formularios">
+            <form id="Transferencia" action="VincularCuentas" method="POST" class="Formularios">
                 <table class="formulario">
                     <tbody>
                         <tr>
                             <td>
-                                <strong>Numero de Cuenta a Vincular</strong>
+                                <label for="cuenta">Numero de Cuenta a Vincular</label>
                             </td>
                             <td>
                                 <input type="text" id="cuenta" name="cuenta" size="25" />
