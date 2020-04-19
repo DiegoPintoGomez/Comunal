@@ -22,6 +22,5 @@
         <li><a href="AgregarCliente.jsp">Agregar Cliente</a></li>
         <li><a href="Retiro.jsp">Retiros</a></li>
         <li><a href="Deposito.jsp">Depositos</a></li>
-        <li><a href="Transferencia.jsp">Transferencias</a></li>
     </ul>
 </section>
