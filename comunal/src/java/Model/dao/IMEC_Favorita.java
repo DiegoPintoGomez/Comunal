@@ -5,7 +5,7 @@ public enum IMEC_Favorita {
     //MODIFICAR("UPDATE estudiante SET apellidos=?, nombre=? WHERE id=?; "),
     EXCLUIR("DELETE FROM Favorita WHERE cliente_id_cliente=?; "),
     CONSULTAR("SELECT * FROM Favorita WHERE cliente_id_cliente=?; "),
-    LISTAR("SELECT * FROM Favorita ; ");
+    LISTAR("SELECT * FROM Favorita; ");
 
     IMEC_Favorita(String comando) {
         this.comando = comando;

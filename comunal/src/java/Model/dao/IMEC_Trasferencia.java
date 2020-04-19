@@ -1,17 +1,14 @@
 package Model.dao;
 
-public enum IMEC_Movimiento {
-    INSERTAR("INSERT INTO Movimiento (cuenta_num_cuenta,"
-            + "monto,"
-            + "fecha,"
-            + "aplicado,"
-            + "movimientocol) VALUES (?, ?, ?, ?, ?)"),
+public enum IMEC_Trasferencia {
+    INSERTAR("INSERT INTO transferencia(cuenta_origen, cuenta_destino, monto, fecha, aplicado) VALUES (?,?,?,?,?);"),
+            
     //MODIFICAR("UPDATE estudiante SET apellidos=?, nombre=? WHERE id=?; "),
     EXCLUIR("DELETE FROM Movimiento WHERE id_movimiento=?; "),
     CONSULTAR("SELECT * FROM Movimiento WHERE id_movimiento=?; "),
     LISTAR("SELECT * FROM Movimiento ; ");
 
-    IMEC_Movimiento(String comando) {
+    IMEC_Trasferencia(String comando) {
         this.comando = comando;
     }
 

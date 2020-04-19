@@ -93,8 +93,9 @@ public class ServicioFavorita {
        public List<favorita> obtenerListaFavorita(String id) {
         List<favorita> r = new ArrayList<favorita>();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Favorita.LISTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Favorita.CONSULTAR.obtenerComando());) {
             stm.clearParameters();
+            stm.setString(1,id);
             try (ResultSet rs = stm.executeQuery()) {
                 while(rs.next()){
                     r.add(getFavorita(rs));
