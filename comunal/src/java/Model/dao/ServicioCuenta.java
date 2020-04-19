@@ -202,6 +202,9 @@ public class ServicioCuenta {
                 | SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
+     if(r.getNum_cuenta().equals("")){
+     return 0;
+     }
         int i=Integer.valueOf(r.getNum_cuenta());
         ++i;
         return i;

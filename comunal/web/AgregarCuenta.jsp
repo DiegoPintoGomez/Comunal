@@ -33,8 +33,8 @@
                 <label for="cliente">Cliente</label>
 
                 <div>
-                    <label for="Nombre">Cedula cliente:</label>
-                    <input type="text" id="cedula" name="cedula" size="25" />
+                    <label for="Cedula">Cedula Cliente:</label>
+                    <input type="text" id="Cedula" name="Cedula" size="25" />
                 </div>
                 </td>
                 </tr>
@@ -45,8 +45,6 @@
 
                         <tbody>
 
-                            
-                            
                             <tr>
                                 <td>
                                     <label for="Nombre"><strong>Nombre</strong></label>
@@ -73,6 +71,17 @@
                                     <input type="text" id="Telefono" name="Telefono" size="25" />
                                 </td>
                             </tr>
+                            
+                            <tr>
+                                <td>
+                                    <label for="Usuario"><strong>Id Usuario</strong></label>
+
+                                </td>
+                                <td>
+                                    <input type="text" id="Usuario" name="Usuario" size="25" />
+                                </td>
+                            </tr>
+                            
                         </tbody>
                     </table>
                 </div>
@@ -101,11 +110,11 @@
                         </tr>
                         <tr>
                             <td>
-                            <input type="radio" name="TipoCuenta" id="TipoCuenta" value="1"  />
+                            <input type="radio" name="TipoCuenta" id="TipoCuenta" value="2"  />
                             <label for="TipoCuenta">ahorro</label>
                             </td>
                             <td>
-                            <input type="radio" name="TipoCuenta" id="TipoCuenta" value="0" checked />
+                            <input type="radio" name="TipoCuenta" id="TipoCuenta" value="1" checked />
                             <label for="TipoCuenta">corriente</label>
                             </td>
                         </tr>
