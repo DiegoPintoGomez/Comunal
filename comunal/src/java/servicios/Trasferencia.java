@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Lenovo
  */
-@WebServlet(name = "Trasferencia", urlPatterns = {"/Trasferencia"})
+@WebServlet(name = "Trasferencia", urlPatterns = {"/Trasferencia", "/ConsulMov"})
 public class Trasferencia extends HttpServlet {
 
     /**
@@ -40,13 +40,26 @@ public class Trasferencia extends HttpServlet {
             try {
                 String Cuenta = request.getParameter("Cuenta");
                 String favorita = request.getParameter("Favorita");
-                String monto= request.getParameter("monto");
-                ServicioTransferencia st=new ServicioTransferencia();
+                String monto = request.getParameter("monto");
+                ServicioTransferencia st = new ServicioTransferencia();
                 st.insertarTransferencia(Cuenta, favorita, monto);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
                 dispatcher.forward(request, response);
             } catch (Exception e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
+        if (request.getServletPath().equals("/ConsulMov")) {
+            try {
+                String valor=null;
+                valor=request.getParameter("Valor");
+                HttpSession sesion = request.getSession();
+                sesion.setAttribute("valor", valor);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ConsultaMovimientos.jsp");
+                dispatcher.forward(request, response);
+            } catch (Exception e) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
                 dispatcher.forward(request, response);
             }
         }

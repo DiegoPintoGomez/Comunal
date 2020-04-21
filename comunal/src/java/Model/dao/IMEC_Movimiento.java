@@ -9,8 +9,8 @@ public enum IMEC_Movimiento {
     //MODIFICAR("UPDATE estudiante SET apellidos=?, nombre=? WHERE id=?; "),
     EXCLUIR("DELETE FROM Movimiento WHERE id_movimiento=?; "),
     CONSULTAR("SELECT * FROM Movimiento WHERE id_movimiento=?; "),
-    LISTAR("SELECT * FROM Movimiento ; ");
-
+    LISTAR("SELECT * FROM Movimiento ; "),
+    LISTAR2("SELECT * FROM Movimiento WHERE cuenta_num_cuenta=?; ");
     IMEC_Movimiento(String comando) {
         this.comando = comando;
     }

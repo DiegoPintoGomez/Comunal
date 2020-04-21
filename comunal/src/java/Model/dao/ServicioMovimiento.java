@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package Model.dao;
- 
 
 import Objetos.Movimiento;
 import Objetos.favorita;
 import coneccion.BaseDatos;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class ServicioMovimiento {
 
-     public Optional<Movimiento> obtenerMovimiento(int Movimiento) {
+    public Optional<Movimiento> obtenerMovimiento(int Movimiento) {
         Optional<Movimiento> r = Optional.empty();
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Movimiento.CONSULTAR.obtenerComando());) {
@@ -52,24 +52,22 @@ public class ServicioMovimiento {
                 | SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-          return r;
+        return r;
     }
-     
-       public int insertarMovimiento(Movimiento Movimiento) {
-        int i=0;
+
+    public int insertarMovimiento(Movimiento Movimiento) {
+        int i = 0;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Movimiento.INSERTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setDouble(1,Movimiento.getCuenta_num_cuenta());
-            stm.setDouble(2,Movimiento.getMonto());
+            stm.setDouble(1, Movimiento.getCuenta_num_cuenta());
+            stm.setDouble(2, Movimiento.getMonto());
             stm.setDate(3, Movimiento.getFecha());
-            stm.setInt(4,Movimiento.getAplicado());
+            stm.setInt(4, Movimiento.getAplicado());
             stm.setString(5, Movimiento.getMovimientocol());
 
-            
-             i=stm.executeUpdate();
-            
-                
+            i = stm.executeUpdate();
+
         } catch (IOException
                 | ClassNotFoundException
                 | IllegalAccessException
@@ -79,17 +77,16 @@ public class ServicioMovimiento {
         }
         return i;
     }
-       
-       public int eliminarfavorita(favorita usu) {
-        int i=0;
+
+    public int eliminarfavorita(favorita usu) {
+        int i = 0;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Favorita.EXCLUIR.obtenerComando());) {
             stm.clearParameters();
-            stm.setString(1,usu.getCliente_id_cliente());
-           
-             i=stm.executeUpdate();
-            
-                
+            stm.setString(1, usu.getCliente_id_cliente());
+
+            i = stm.executeUpdate();
+
         } catch (IOException
                 | ClassNotFoundException
                 | IllegalAccessException
@@ -99,14 +96,15 @@ public class ServicioMovimiento {
         }
         return i;
     }
-       
-       public List<favorita> obtenerListaFavorita(String id) {
-        List<favorita> r = new ArrayList<favorita>();
+
+    public List<Movimiento> obtenerListaMovimientosCuenta(String id) {
+        List<Movimiento> r = new ArrayList<Movimiento>();
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC_Favorita.LISTAR.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Movimiento.LISTAR2.obtenerComando());) {
             stm.clearParameters();
+            stm.setString(1, id);
             try (ResultSet rs = stm.executeQuery()) {
-                while(rs.next()){
+                while (rs.next()) {
                     r.add(getFavorita(rs));
                 }
             }
@@ -117,22 +115,23 @@ public class ServicioMovimiento {
                 | SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-          return r;
+        return r;
     }
-        
-       private favorita getFavorita(ResultSet rs) throws SQLException{
-        
-            favorita usu= new favorita(
-                            rs.getString("cliente_id_cliente"),
-                            rs.getString("cuenta_num_cuenta")
-                          
-            );
-            return usu; 
-            
-        }
-       
-     
-     public Connection obtenerConexion() throws
+
+    private Movimiento getFavorita(ResultSet rs) throws SQLException {
+
+        Movimiento usu = new Movimiento(
+                rs.getInt("id_movimiento"),
+                Double.parseDouble(rs.getString("cuenta_num_cuenta")),
+                rs.getDouble("monto"),
+                rs.getDate("fecha"),
+                rs.getInt("aplicado"),
+                rs.getString("movimientocol")
+        );
+        return usu;
+    }
+
+    public Connection obtenerConexion() throws
             ClassNotFoundException,
             IllegalAccessException,
             InstantiationException,
