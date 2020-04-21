@@ -8,7 +8,7 @@
         usuario = sesion.getAttribute("usuario").toString();
         nombre = sesion.getAttribute("nombre").toString() + sesion.getAttribute("apellidos").toString();;
     } else {
-        out.print("<stript>location.replace('Login.jsp');</stript>");
+        response.sendRedirect("Cerrar");
     }
 %>
 
