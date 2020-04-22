@@ -209,4 +209,23 @@ public class ServicioCuenta {
         ++i;
         return i;
      }
+     
+     public void actualizaMonto(double d,String id) {
+          try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Cuenta.MODIFICAR.obtenerComando());) {
+            stm.clearParameters();
+            stm.setDouble(1, d);
+            stm.setString(2, id);
+            stm.executeUpdate();
+        } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+           System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+     }
+     
+     
+     
 }

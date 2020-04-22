@@ -76,12 +76,21 @@
                                 </select>
                             </td>
                         </tr>
+                    
                     <td>
                         <label for="valor">Monto a Depositat:</label>
                     </td>
                     <td>
                         <input type="text" id="monto" name="monto" size="25" />
                     </td>
+                    <tr>
+                    <td>
+                        <label for="valor">Detalle:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="detalle" name="detalle" size="25" />
+                    </td>                    
+                    </tr>
                     <tr>
                         <td colspan="3">
                             <button type="submit">Aplicar</button>

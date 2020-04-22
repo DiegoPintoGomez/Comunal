@@ -60,10 +60,16 @@ public class ServicioMovimiento {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC_Movimiento.INSERTAR.obtenerComando());) {
             stm.clearParameters();
-            stm.setDouble(1, Movimiento.getCuenta_num_cuenta());
+            int a;
+            a = (int) Movimiento.getCuenta_num_cuenta();
+            stm.setString(1,String.valueOf(a));
+            
             stm.setDouble(2, Movimiento.getMonto());
+            
             stm.setDate(3, Movimiento.getFecha());
+            
             stm.setInt(4, Movimiento.getAplicado());
+            
             stm.setString(5, Movimiento.getMovimientocol());
 
             i = stm.executeUpdate();

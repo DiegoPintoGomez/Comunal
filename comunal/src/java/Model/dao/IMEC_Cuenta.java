@@ -13,7 +13,7 @@ public enum IMEC_Cuenta {
             + "fecha_ultima_aplicacion,"
             + " saldo_final) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
-    //MODIFICAR("UPDATE estudiante SET apellidos=?, nombre=? WHERE id=?; "),
+    MODIFICAR("UPDATE Cuenta SET saldo_inicial=saldo_final, saldo_final = saldo_final + ? WHERE num_cuenta= ?;"),
     EXCLUIR("DELETE FROM Cuenta WHERE num_cuenta=?; "),
     CONSULTAR("SELECT * FROM Cuenta WHERE num_cuenta=?; "),
     LISTAR("SELECT * FROM Cuenta WHERE cliente_id_cliente=?; ");

@@ -6,9 +6,13 @@
 package servicios;
 
 import Model.dao.ServicioCliente;
+import Model.dao.ServicioCuenta;
+import Model.dao.ServicioMovimiento;
+import Objetos.Movimiento;
 import Objetos.cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author diego
  */
-@WebServlet(name = "GenerarDeposito", urlPatterns = {"/GenerarDeposito"})
+@WebServlet(name = "GenerarDeposito", urlPatterns = {"/GenerarDeposito","/aplicar"})
 public class Deposito extends HttpServlet {
 
     /**
@@ -35,6 +39,33 @@ public class Deposito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(request.getServletPath().equals("/aplicar")){
+             try {
+            String cuenta = request.getParameter("Cuenta");
+            double monto = Double.valueOf(request.getParameter("monto"));
+            int aplicado=1;
+            String detalle = request.getParameter("detalle");
+            Movimiento movi = new Movimiento();
+            ServicioMovimiento SM = new ServicioMovimiento();
+            movi.setAplicado(aplicado);
+            movi.setCuenta_num_cuenta(Double.valueOf(cuenta));
+            movi.setFecha(new Date(System.currentTimeMillis()));
+            movi.setMovimientocol(detalle);
+            movi.setMonto(monto);
+            SM.insertarMovimiento(movi);
+            
+            ServicioCuenta SC = new ServicioCuenta();
+            SC.actualizaMonto(monto, cuenta);
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Deposito.jsp");
+            dispatcher.forward(request, response);
+        }
+         catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+            dispatcher.forward(request, response);
+        }
+        }
+        if(request.getServletPath().equals("/GenerarDeposito")){
         try {
             String dato = request.getParameter("valor");
             String dato2 = request.getParameter("Dato");
@@ -54,6 +85,7 @@ public class Deposito extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
             dispatcher.forward(request, response);
         }
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
