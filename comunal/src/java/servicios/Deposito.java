@@ -35,28 +35,27 @@ public class Deposito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
+        try {
             String dato = request.getParameter("valor");
-
+            String dato2 = request.getParameter("Dato");
             HttpSession sesion = request.getSession();
 
             sesion.setAttribute("ID", dato);
-            
-            
-              cliente c = new cliente();
-       ServicioCliente sc = new ServicioCliente();
-       c = sc.obtenerCliente(dato).get();
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ListaCuentasCliente.jsp");
+            sesion.setAttribute("buscar", dato2);
+            cliente c = new cliente();
+            if(dato2.equals("1")){
+            ServicioCliente sc = new ServicioCliente();
+            c = sc.obtenerCliente(dato).get();
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Deposito.jsp");
             dispatcher.forward(request, response);
-     
-        
-    }
-       catch (Exception e) {
-RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+
+        } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
             dispatcher.forward(request, response);
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

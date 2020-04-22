@@ -7,7 +7,7 @@
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <%@ include file="MenuCliente.jsp"%>
+        <%@ include file="Menu.jsp"%>
         <section class="box2">
              <h1>Error de transaccion</h1>
              <img src="imagenes/cerrar.png" alt=""/>

@@ -106,6 +106,7 @@
                                     out.println("</tr>");
                                 }
                             }
+                            sesion1.setAttribute("valor", null);
                         %>
                     </tbody>
                 </table>
