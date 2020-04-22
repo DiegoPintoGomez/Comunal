@@ -31,7 +31,7 @@
                         <tr>
                             <td colspan="3">
                                 <button type="submit">Buscar</button>
-                            </td>
+                            </td> 
                         </tr>
                     </tbody>
                 </table>

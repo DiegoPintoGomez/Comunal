@@ -4,7 +4,23 @@
     Author     : Lenovo
 --%>
 
+<%@page import="Model.dao.ServicioCuenta"%>
+<%@page import="Model.dao.ServicioCliente"%>
+<%@page import="Objetos.Cuenta"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+< <%
+            HttpSession sesion1 = request.getSession();
+            String Cliente = "";
+            List<Cuenta> l = new ArrayList();
+            if (sesion1.getAttribute("ID") != null) {
+                Cliente = sesion1.getAttribute("ID").toString();
+                ServicioCliente sc = new ServicioCliente();
+                ServicioCuenta scu = new ServicioCuenta();
+                l = scu.obtenerListaCuenta(Cliente);
+            }
+                %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
@@ -13,17 +29,10 @@
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <section class="Encabezado">
-            <ul id="menu">
-                <li><a href="#modal" class="btn-open-popup">Crear cuenta</a></li>
-                <li><a href=”#”>Retiros</a></li>
-                <li><a href=”#”>Depositos</a></li>
-            </ul>
-        </section>
-
+        <%@ include file="Menu.jsp"%>
         <section class="box2">
-            <h1 >Lista de Cuentas: </h1>
-
+            <h1 >Lista de Cuentas: </h1>            
+            <h1> ID del usuario es:<a> <%=Cliente%> </a> </h1>
             <table class="tablaM">
                 <thead>
                     <tr>
@@ -37,34 +46,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                     <% for (Cuenta BT : l){ %>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <%= BT.getNum_cuenta().toString()%>
+                        </td>
+                        <td>
+                            <%=BT.getTipo_cuenta_id_tipo_cuenta()%>
+                        </td>
+                        <td>
+                            <%=BT.getMoneda_nombre().toString()%>
+                        </td>
+                        <td>
+                            <%=BT.getFecha_creacion().toString()%>
+                        </td>
+                        <td>
+                            <%=BT.getLimite_transferencia_diaria().toString()%>
+                        </td>
+                        <td>
+                            <%=BT.getActiva()%>
+                        </td>
+                        <td>
+                            <%=BT.getSaldo_inicial().toString()%>
+                        </td>
 
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <% }%>
                 </tbody>
             </table>
 
