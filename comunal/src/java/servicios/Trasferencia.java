@@ -5,11 +5,15 @@
  */
 package servicios;
 
+import Model.dao.ServicioCuenta;
 import Model.dao.ServicioFavorita;
+import Model.dao.ServicioMovimiento;
 import Model.dao.ServicioTransferencia;
+import Objetos.Movimiento;
 import Objetos.favorita;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,10 +45,13 @@ public class Trasferencia extends HttpServlet {
                 String Cuenta = request.getParameter("Cuenta");
                 String favorita = request.getParameter("Favorita");
                 String monto = request.getParameter("monto");
+                String detalle = request.getParameter("detalle");
                 ServicioTransferencia st = new ServicioTransferencia();
                 st.insertarTransferencia(Cuenta, favorita, monto);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
                 dispatcher.forward(request, response);
+                insertarmovimientos(Cuenta,favorita,Double.valueOf(monto),detalle);
+
             } catch (Exception e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
                 dispatcher.forward(request, response);
@@ -52,8 +59,8 @@ public class Trasferencia extends HttpServlet {
         }
         if (request.getServletPath().equals("/ConsulMov")) {
             try {
-                String valor=null;
-                valor=request.getParameter("Valor");
+                String valor = null;
+                valor = request.getParameter("Valor");
                 HttpSession sesion = request.getSession();
                 sesion.setAttribute("valor", valor);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ConsultaMovimientos.jsp");
@@ -104,4 +111,27 @@ public class Trasferencia extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    void insertarmovimientos(String Cuenta1, String Cuenta2, double monto, String Detalle) {
+        ServicioMovimiento sm = new ServicioMovimiento();
+        ServicioCuenta sc = new ServicioCuenta();
+        
+        
+        Movimiento movi = new Movimiento();
+        Movimiento movi2 = new Movimiento();
+        movi.setAplicado(1);
+        movi2.setAplicado(1);
+        movi.setCuenta_num_cuenta(Double.valueOf(Cuenta1));
+        movi2.setCuenta_num_cuenta(Double.valueOf(Cuenta2));
+        movi.setFecha(new Date(System.currentTimeMillis()));
+        movi2.setFecha(new Date(System.currentTimeMillis()));
+        movi.setMovimientocol(Detalle);
+        movi2.setMovimientocol(Detalle);
+        movi.setMonto(0-Double.valueOf(monto));
+        movi2.setMonto(Double.valueOf(monto));
+        sm.insertarMovimiento(movi);
+        sm.insertarMovimiento(movi2);
+        
+        sc.actualizaMonto(monto, Cuenta2);
+        sc.actualizaMonto(0-monto, Cuenta1);
+    }
 }
