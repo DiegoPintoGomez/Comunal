@@ -8,6 +8,7 @@ package servicios;
 import Model.dao.ServicioCliente;
 import Model.dao.ServicioCuenta;
 import Model.dao.ServicioMovimiento;
+import Objetos.Cuenta;
 import Objetos.Movimiento;
 import Objetos.cliente;
 import java.io.IOException;
@@ -25,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author diego
  */
-@WebServlet(name = "GenerarDeposito", urlPatterns = {"/GenerarDeposito","/aplicar"})
-public class Deposito extends HttpServlet {
+@WebServlet(name = "GenerarRetiro", urlPatterns = {"/GenerarRetiro","/aplicarRetiro"})
+public class Retiro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,12 +40,13 @@ public class Deposito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(request.getServletPath().equals("/aplicar")){
+        if(request.getServletPath().equals("/aplicarRetiro")){
              try {
+                 if(retiro(request,response) ){
             String cuenta = request.getParameter("Cuenta");
-            double monto = Double.valueOf(request.getParameter("monto"));
+            double monto = 0-Double.valueOf(request.getParameter("monto"));
             int aplicado=1;
-            String detalle = request.getParameter("detalle");
+            String detalle = "retiro";
             Movimiento movi = new Movimiento();
             ServicioMovimiento SM = new ServicioMovimiento();
             
@@ -58,15 +60,20 @@ public class Deposito extends HttpServlet {
             ServicioCuenta SC = new ServicioCuenta();
             SC.actualizaMonto(monto, cuenta);
             
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Deposito.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Retiro.jsp");
             dispatcher.forward(request, response);
-        }
+            }
+                 else{
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+                    dispatcher.forward(request, response);
+                 }
+            }
          catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
             dispatcher.forward(request, response);
         }
         }
-        if(request.getServletPath().equals("/GenerarDeposito")){
+        if(request.getServletPath().equals("/GenerarRetiro")){
         try {
             String dato = request.getParameter("valor");
             String dato2 = request.getParameter("Dato");
@@ -79,7 +86,7 @@ public class Deposito extends HttpServlet {
             ServicioCliente sc = new ServicioCliente();
             c = sc.obtenerCliente(dato).get();
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Deposito.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Retiro.jsp");
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
@@ -127,5 +134,20 @@ public class Deposito extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    
+   public boolean retiro(HttpServletRequest request, HttpServletResponse response){
+            String cuenta = request.getParameter("Cuenta");
+            
+            ServicioCuenta SC = new ServicioCuenta();
+            Cuenta cu = SC.obtenerCuenta(cuenta).get();
+            double monto = Double.valueOf(request.getParameter("monto"));
+            if(monto > cu.getSaldo_final()){
+                return false;
+            }
+            return true;
+    }
+    
+    
+    
 }

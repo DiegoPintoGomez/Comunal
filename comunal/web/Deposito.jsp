@@ -69,7 +69,7 @@
                                 <select id="Cuenta" name="Cuenta" size="1">
                                     <%for (int j = 0; j < l.size(); j++) {
                                             out.println("<option value='" + l.get(j).getNum_cuenta() + "'>");
-                                            out.println(l.get(j).getNum_cuenta());
+                                            out.println("num cuenta: "+l.get(j).getNum_cuenta() + " cedula: "+l.get(j).getCliente_id_cliente());
                                             out.print("</option>");
                                         }
                                     %>
@@ -99,7 +99,9 @@
                     </tbody>
                 </table>
             </form>
-            <%}%>
+            <%
+                sesion1.setAttribute("ID", null);
+                }%>
 
         </section>
     </body>
