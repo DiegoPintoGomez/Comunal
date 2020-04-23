@@ -141,6 +141,25 @@ public class ServicioCuenta {
         }
           return r;
     }
+       public List<Cuenta> obtenerListaTotalCuenta() {
+        List<Cuenta> r = new ArrayList<Cuenta>();
+        try (Connection cnx = obtenerConexion();
+                PreparedStatement stm = cnx.prepareStatement(IMEC_Cuenta.LISTARTOTAL.obtenerComando());) {     
+            stm.clearParameters();
+            try (ResultSet rs = stm.executeQuery()) {
+                while(rs.next()){
+                    r.add(getCuenta(rs));
+                }
+            }
+        } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+          return r;
+    }
         
        private Cuenta getCuenta(ResultSet rs) throws SQLException{
         

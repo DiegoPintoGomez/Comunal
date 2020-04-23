@@ -16,6 +16,7 @@ public enum IMEC_Cuenta {
     MODIFICAR("UPDATE Cuenta SET saldo_inicial=saldo_final, saldo_final = saldo_final + ? WHERE num_cuenta= ?;"),
     EXCLUIR("DELETE FROM Cuenta WHERE num_cuenta=?; "),
     CONSULTAR("SELECT * FROM Cuenta WHERE num_cuenta=?; "),
+    LISTARTOTAL("SELECT * FROM Cuenta; "),
     LISTAR("SELECT * FROM Cuenta WHERE cliente_id_cliente=?; ");
     
     
