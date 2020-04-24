@@ -38,15 +38,15 @@ public class Intereses extends HttpServlet {
             ServicioTipo_Cuenta st = new ServicioTipo_Cuenta();
             ServicioCuenta sc = new ServicioCuenta();
             tipo_cuenta t = st.obtenertipo_cuenta(c.getTipo_cuenta_id_tipo_cuenta()).get();
-            double monto = c.getSaldo_final() * t.getTasa_interés();
+            int monto = (int) (c.getSaldo_final() * t.getTasa_interés());
             Movimiento movi = new Movimiento();
             movi.setAplicado(1);
             movi.setCuenta_num_cuenta(Double.valueOf(c.getNum_cuenta()));
             movi.setFecha(new Date(System.currentTimeMillis()));
-            movi.setMovimientocol("Intereses ganados a su cuanta");
+            movi.setMovimientocol("Intereses ganados a su cuenta");
             movi.setMonto(monto);
             sm.insertarMovimiento(movi);
-            sc.actualizaMonto(monto, c.getNum_cuenta());
+            sc.actualizaMonto(movi.getMonto(), c.getNum_cuenta());
         }
     }
 

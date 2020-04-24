@@ -46,14 +46,25 @@ public class Trasferencia extends HttpServlet {
                 String favorita = request.getParameter("Favorita");
                 String monto = request.getParameter("monto");
                 String detalle = request.getParameter("detalle");
+                ServicioCuenta c = new ServicioCuenta();
+                if (c.obtenerCuenta(Cuenta).get().getLimite_transferencia_diaria() < Double.valueOf(monto)) {
+                    request.setAttribute("Mensaje", "El monto excede el limite diario de transferencia");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
+                    dispatcher.forward(request, response);
+                }
+                if (c.obtenerCuenta(Cuenta).get().getSaldo_final()< Double.valueOf(monto)) {
+                    request.setAttribute("Mensaje","Fondos insuficientes");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
+                    dispatcher.forward(request, response);
+                }
                 ServicioTransferencia st = new ServicioTransferencia();
                 st.insertarTransferencia(Cuenta, favorita, monto);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
                 dispatcher.forward(request, response);
-                insertarmovimientos(Cuenta,favorita,Double.valueOf(monto),detalle);
+                insertarmovimientos(Cuenta, favorita, Double.valueOf(monto), detalle);
 
             } catch (Exception e) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
                 dispatcher.forward(request, response);
             }
         }
@@ -114,8 +125,7 @@ public class Trasferencia extends HttpServlet {
     void insertarmovimientos(String Cuenta1, String Cuenta2, double monto, String Detalle) {
         ServicioMovimiento sm = new ServicioMovimiento();
         ServicioCuenta sc = new ServicioCuenta();
-        
-        
+
         Movimiento movi = new Movimiento();
         Movimiento movi2 = new Movimiento();
         movi.setAplicado(1);
@@ -126,12 +136,12 @@ public class Trasferencia extends HttpServlet {
         movi2.setFecha(new Date(System.currentTimeMillis()));
         movi.setMovimientocol(Detalle);
         movi2.setMovimientocol(Detalle);
-        movi.setMonto(0-Double.valueOf(monto));
+        movi.setMonto(0 - Double.valueOf(monto));
         movi2.setMonto(Double.valueOf(monto));
         sm.insertarMovimiento(movi);
         sm.insertarMovimiento(movi2);
-        
+
         sc.actualizaMonto(monto, Cuenta2);
-        sc.actualizaMonto(0-monto, Cuenta1);
+        sc.actualizaMonto(0 - monto, Cuenta1);
     }
 }

@@ -5,7 +5,7 @@ body{
     background: #ffffff;
 }
 .box{
-    width: 300px;
+    width: 5000px;
     padding: 40px;
     position: absolute;
     top: 50%;
@@ -25,6 +25,12 @@ body{
     font-weight: 500;
 
 }
+
+.box label{
+    color: white;
+    text-transform: uppercase;
+
+}
 .box input[type = "text"],.box input[type = "password"]{
     border:0;
     background: none;
@@ -39,10 +45,7 @@ body{
     border-radius: 24px;
     transition: 0.25s;
 }
-.box input[type = "text"]:focus,.box input[type = "password"]:focus{
-    width: 280px;
-    border-color: #2ecc71;
-}
+
 .box input[type = "submit"]{
     border:0;
     background: none;
@@ -149,6 +152,14 @@ body{
     padding: 10px;
     color: #fff;
 }
+a {
+    font-family: Arial;
+    font-size: 15px;
+    text-decoration: none;
+    float: left;
+    padding: 10px;
+    color: #fff;
+}
 .Encabezado{
     width: 100%;
     padding: 10px;
@@ -165,17 +176,17 @@ body{
 }
 .formulario tr{
     margin: 5%;
-    
+
 }
 .formulario label{
-        border:0;
+    border:0;
     background: none;
     text-align: center;
     outline: none;
     color: white;
-    
+
 }
-.Formularios input[type = "text"], select{
+.Formularios input[type = "text"], select, input[type = "date"]{
     border:0;
     background: whitesmoke;
     text-align: center;
