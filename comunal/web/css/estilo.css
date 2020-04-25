@@ -19,6 +19,10 @@ body{
     text-transform: uppercase;
 
 }
+.box h2{
+    color: white;
+
+}
 .box h3{
     color: red;
     text-transform: uppercase;

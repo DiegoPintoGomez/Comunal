@@ -10,6 +10,7 @@ import Model.dao.ServicioCliente;
 import Model.dao.ServicioCuenta;
 import Model.dao.ServicioTipo_Cuenta;
 import Model.dao.ServicioUsuario;
+import Objetos.Contrasenna;
 import Objetos.Cuenta;
 import Objetos.Usuario;
 import Objetos.cliente;
@@ -49,7 +50,7 @@ public class AgregarCuenta extends HttpServlet {
         if(Cliente==1){
             int clave2=1;
             
-            String clave="clave123";
+            String clave=Contrasenna.getPassword();
            String usuario =request.getParameter("Usuario");
            
             Usuario usu = new Usuario(usuario,clave,clave2,2);
@@ -74,6 +75,9 @@ public class AgregarCuenta extends HttpServlet {
         
             ServicioCliente SC = new ServicioCliente();
             SC.insertarCliente(cli);
+            
+            request.setAttribute("Us", usuario);
+            request.setAttribute("Clave", clave);
         }
         
         double limite = Integer.valueOf(request.getParameter("limite"));
@@ -96,8 +100,9 @@ public class AgregarCuenta extends HttpServlet {
         
         SC.insertarCuenta(cu);
        
-       RequestDispatcher dispatcher = request.getRequestDispatcher("AgregarCuenta.jsp");
-                        dispatcher.forward(request, response);
+       
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCajero.jsp");
+            dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

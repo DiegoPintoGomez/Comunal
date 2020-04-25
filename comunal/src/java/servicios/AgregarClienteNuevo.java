@@ -7,6 +7,7 @@ package servicios;
 
 import Model.dao.ServicioCliente;
 import Model.dao.ServicioUsuario;
+import Objetos.Contrasenna;
 import Objetos.Usuario;
 import Objetos.cliente;
 
@@ -43,17 +44,20 @@ public class AgregarClienteNuevo extends HttpServlet {
             String apellidos = request.getParameter("Apellidos");
             String telefono = request.getParameter("Telefono");
             String Usuario = request.getParameter("Usuario");
-            int rol= Integer.parseInt(request.getParameter("Rol"));
-            String clave="clave123";
-            int clave2=1;
-            
-            Usuario u=new Usuario(Usuario,clave,clave2,rol);
-            cliente c=new cliente(id,Usuario,nombre,apellidos,telefono);
-            ServicioUsuario su=new ServicioUsuario();
-            ServicioCliente sc=new ServicioCliente();
+            int rol = Integer.parseInt(request.getParameter("Rol"));
+            String clave = Contrasenna.getPassword();
+            int clave2 = 1;
+
+            Usuario u = new Usuario(Usuario, clave, clave2, rol);
+            cliente c = new cliente(id, Usuario, nombre, apellidos, telefono);
+            ServicioUsuario su = new ServicioUsuario();
+            ServicioCliente sc = new ServicioCliente();
             su.insertarUsuario(u);
             sc.insertarCliente(c);
-            
+            request.setAttribute("Us", Usuario);
+            request.setAttribute("Clave", clave);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCajero.jsp");
+            dispatcher.forward(request, response);
         } catch (Exception e) {
 
         }
