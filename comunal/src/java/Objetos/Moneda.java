@@ -71,6 +71,8 @@ public class Moneda {
     public String toString() {
         return "Moneda{" + "nombre=" + nombre + ", descripcion=" + descripcion + ", simbolo=" + simbolo + ", tipo_cambio_compra=" + tipo_cambio_compra + ", tipo_cambio_venta=" + tipo_cambio_venta + '}';
     }
-    
-    
+                                      
+    public static double conversion(Moneda m1,Moneda m2,double monto){
+    return m2.getTipo_cambio_compra()*monto/m1.getTipo_cambio_venta();    
+    }  
 }
