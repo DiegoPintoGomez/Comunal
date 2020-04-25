@@ -85,6 +85,13 @@
                             <button type="submit">Realizar transferencia</button>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p>*Los montos a tomar en cuenta seran los de la cuenta de</p>
+                            <p>origen los cuales seran evaluados segun el tipo de cambio</p>
+                            <p>de la moneda de destino</p>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </form>
