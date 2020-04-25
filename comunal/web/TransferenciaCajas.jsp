@@ -18,8 +18,8 @@
             HttpSession sesion1 = request.getSession();
             String Cliente = null;
             List<Cuenta> l = new ArrayList();
-            if (sesion1.getAttribute("ID") != null) {
-                Cliente = sesion1.getAttribute("ID").toString();
+            if (sesion1.getAttribute("transfe2") != null) {
+                Cliente = sesion1.getAttribute("transfe2").toString();
                 ServicioCuenta sc = new ServicioCuenta();
                 if (sesion1.getAttribute("buscar").toString().equals("1")) {
                     l = sc.obtenerListaCuenta(Cliente);
@@ -49,9 +49,11 @@
             <form id="TransfereciaCajas" action="TransfereciaCajas" method="POST" class="Formularios">
                 <table class="formulario">
                     <tbody>
+                        <%if(Cliente==null || reti1==null ) { 
+                        %>
                         <tr>
                             <td>
-                                <label for="transfe">Buscar Por:</label>
+                                <label for="transfe">buscar cuenta origen</label>
                             </td>
                             <td>
                                 <input type="text" id="transfe" name="transfe" size="25" />
@@ -69,7 +71,7 @@
                         
                           <tr>
                             <td>
-                                <label for="transfe1">Buscar Por:</label>
+                                <label for="transfe1">Buscar cuenta destino:</label>
                             </td>
                             <td>
                                 <input type="text" id="transfe1" name="transfe1" size="25" />
@@ -86,14 +88,21 @@
                         
                         <tr>
                             <td colspan="3">
-                                <button type="submit">Buscar</button>
+                                <button type="submit">Buscar cuentas</button>
                             </td> 
                         </tr>
+                        <tr>
+                        <td colspan="3">
+                            <p>*Debe de aplicar los dos metododos de buscar</p>
+                            <p>para poder continuar con la transferencia</p>
+                        </td>
+                    </tr>
+                        <%}%>
                     </tbody>
                 </table>
             </form>
             <form id="buscar" action="buscar" method="POST" class="Formularios">
-              <%if (Cliente != null) {
+              <%if (Cliente != null && reti1 !=null) {
 
             %>
                 <table class="formulario">
@@ -110,12 +119,12 @@
                                             out.print("</option>");
                                         }
                                     %>
-                                </select>
+                                </select> 
                             </td>
                         </tr>
                     
                     <td>
-                        <label for="valor">Monto a Depositat:</label>
+                        <label for="valor">Monto a Depositar:</label>
                     </td>
                     <td>
                         <input type="text" id="monto" name="monto" size="25" />
@@ -139,7 +148,7 @@
                                 <label for="valor">Seleccione la cuenta a depositar:</label>
                             </td>
                             <td>
-                                <select id="Cuenta" name="Cuenta" size="1">
+                                <select id="Cuenta1" name="Cuenta1" size="1">
                                     <%for (int j = 0; j < Cuen.size(); j++) {
                                             out.println("<option value='" + Cuen.get(j).getNum_cuenta() + "'>");
                                             out.println("num cuenta: "+ Cuen.get(j).getNum_cuenta() + " cedula: "+Cuen.get(j).getCliente_id_cliente());
@@ -154,6 +163,13 @@
                         <td colspan="3">
                             <button type="submit">Aplicar</button>
                         </td> 
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p>*Los montos a tomar en cuenta seran los de la cuenta de</p>
+                            <p>origen los cuales seran evaluados segun el tipo de cambio</p>
+                            <p>de la moneda de destino </p>
+                        </td>
                     </tr>
                     </tbody>                    
                 </table>            

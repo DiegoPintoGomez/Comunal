@@ -7,7 +7,10 @@ package servicios;
 
 import Model.dao.ServicioCliente;
 import Model.dao.ServicioCuenta;
+import Model.dao.ServicioMoneda;
 import Model.dao.ServicioMovimiento;
+import Model.dao.ServicioTransferencia;
+import Objetos.Moneda;
 import Objetos.Movimiento;
 import Objetos.cliente;
 import java.io.IOException;
@@ -25,7 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author diego
  */
-@WebServlet(name = "TransfereciaCajas", urlPatterns = {"/TransfereciaCajas"})
+@WebServlet(name = "TransfereciaCajas", urlPatterns = {"/TransfereciaCajas","/buscar"})
 public class TransfereciaCajas extends HttpServlet {
 
     /**
@@ -39,32 +42,34 @@ public class TransfereciaCajas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            if(request.getServletPath().equals("/buscar")){
-             try {
-            String cuenta = request.getParameter("Cuenta");
-            double monto = Double.valueOf(request.getParameter("monto"));
-            int aplicado=1;
-            String detalle = request.getParameter("detalle");
-            Movimiento movi = new Movimiento();
-            ServicioMovimiento SM = new ServicioMovimiento();
-            
-            movi.setAplicado(aplicado);
-            movi.setCuenta_num_cuenta(Double.valueOf(cuenta));
-            movi.setFecha(new Date(System.currentTimeMillis()));
-            movi.setMovimientocol(detalle);
-            movi.setMonto(monto);
-            SM.insertarMovimiento(movi);
-            
-            ServicioCuenta SC = new ServicioCuenta();
-            SC.actualizaMonto(monto, cuenta);
-            
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Deposito.jsp");
-            dispatcher.forward(request, response);
-        }
-         catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
-            dispatcher.forward(request, response);
-        }
+                if (request.getServletPath().equals("/buscar")) {
+            try {
+                String Cuenta = request.getParameter("Cuenta");
+                String favorita = request.getParameter("Cuenta1");
+                String monto = request.getParameter("monto");
+                String detalle = request.getParameter("detalle");
+                ServicioCuenta c = new ServicioCuenta();
+
+                if (c.obtenerCuenta(Cuenta).get().getLimite_transferencia_diaria() < Double.valueOf(monto)) {
+                    request.setAttribute("Mensaje", "El monto excede el limite diario de transferencia");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+                    dispatcher.forward(request, response);
+                }else if (c.obtenerCuenta(Cuenta).get().getSaldo_final() < Double.valueOf(monto)) {
+                    request.setAttribute("Mensaje", "Fondos insuficientes");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    ServicioTransferencia st = new ServicioTransferencia();
+                    st.insertarTransferencia(Cuenta, favorita, monto);
+                    insertarmovimientos(Cuenta, favorita, Double.valueOf(monto), detalle);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCajero.jsp");
+                    dispatcher.forward(request, response);
+                }
+
+            } catch (Exception e) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+                dispatcher.forward(request, response);
+            }
         }
         
         
@@ -76,7 +81,7 @@ public class TransfereciaCajas extends HttpServlet {
             HttpSession sesion = request.getSession();
             
             if(!dato.equals("")){           
-                sesion.setAttribute("ID", dato);
+                sesion.setAttribute("transfe2", dato);
             }
             sesion.setAttribute("buscar", dato2);
             cliente c = new cliente();
@@ -154,4 +159,30 @@ public class TransfereciaCajas extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+     void insertarmovimientos(String Cuenta1, String Cuenta2, double monto, String Detalle) {
+
+        ServicioMovimiento sm = new ServicioMovimiento();
+        ServicioCuenta sc = new ServicioCuenta();
+        ServicioMoneda smo = new ServicioMoneda();
+        Moneda m1 = smo.obtenerMoneda(sc.obtenerCuenta(Cuenta1).get().getMoneda_nombre()).get();
+
+        Moneda m = smo.obtenerMoneda(sc.obtenerCuenta(Cuenta2).get().getMoneda_nombre()).get();
+        double monto2 = m1.conversion(m1, m, monto);
+        Movimiento movi = new Movimiento();
+        Movimiento movi2 = new Movimiento();
+        movi.setAplicado(1);
+        movi2.setAplicado(1);
+        movi.setCuenta_num_cuenta(Double.valueOf(Cuenta1));
+        movi2.setCuenta_num_cuenta(Double.valueOf(Cuenta2));
+        movi.setFecha(new Date(System.currentTimeMillis()));
+        movi2.setFecha(new Date(System.currentTimeMillis()));
+        movi.setMovimientocol(Detalle);
+        movi2.setMovimientocol(Detalle);
+        movi.setMonto(0 - Double.valueOf(monto));
+        movi2.setMonto(Double.valueOf(monto2));
+        sm.insertarMovimiento(movi);
+        sm.insertarMovimiento(movi2);
+        sc.actualizaMonto(monto2, Cuenta2);
+        sc.actualizaMonto(0 - monto, Cuenta1);
+    }
 }

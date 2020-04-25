@@ -11,6 +11,9 @@
         <section class="box2">
              <h1>Error de transaccion</h1>
              <img src="imagenes/cerrar.png" alt=""/>
+              <% if(request.getAttribute("Mensaje")!=null){%>
+             <h1><%=request.getAttribute("Mensaje")%></h1>
+             <%}%>
         </section>
     </body>
 </html>
