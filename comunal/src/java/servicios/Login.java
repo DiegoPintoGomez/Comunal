@@ -55,7 +55,7 @@ public class Login extends HttpServlet {
                 sesion.setAttribute("nombre", c.get().getNombre());
                 sesion.setAttribute("apellidos", c.get().getApellidos());
 
-                RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
                 dispatcher.forward(request, response);
             } else {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
