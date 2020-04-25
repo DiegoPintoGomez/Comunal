@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author diego
  */
-@WebServlet(name = "GenerarDeposito", urlPatterns = {"/GenerarDeposito","/aplicar"})
-public class Deposito extends HttpServlet {
+@WebServlet(name = "TransfereciaCajas", urlPatterns = {"/TransfereciaCajas"})
+public class TransfereciaCajas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +39,7 @@ public class Deposito extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(request.getServletPath().equals("/aplicar")){
+            if(request.getServletPath().equals("/buscar")){
              try {
             String cuenta = request.getParameter("Cuenta");
             double monto = Double.valueOf(request.getParameter("monto"));
@@ -66,28 +66,54 @@ public class Deposito extends HttpServlet {
             dispatcher.forward(request, response);
         }
         }
-        if(request.getServletPath().equals("/GenerarDeposito")){
+        
+        
+
+            if(request.getServletPath().equals("/TransfereciaCajas")){
         try {
-            String dato = request.getParameter("valor");
+            String dato = request.getParameter("transfe");
             String dato2 = request.getParameter("Dato");
             HttpSession sesion = request.getSession();
-
-            sesion.setAttribute("ID", dato);
+            
+            if(!dato.equals("")){           
+                sesion.setAttribute("ID", dato);
+            }
             sesion.setAttribute("buscar", dato2);
             cliente c = new cliente();
             if(dato2.equals("1")){
             ServicioCliente sc = new ServicioCliente();
             c = sc.obtenerCliente(dato).get();
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Deposito.jsp");
-            dispatcher.forward(request, response);
 
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+
+            
+            
+            String dato3 = request.getParameter("transfe1");
+            String dato4 = request.getParameter("Dato1");
+
+            if(!dato3.equals("")){           
+                sesion.setAttribute("reti", dato3);
+            }
+            
+            sesion.setAttribute("search", dato4);
+            cliente cli = new cliente();
+            
+            if(dato4.equals("1")){
+            ServicioCliente sc = new ServicioCliente();
+            cli = sc.obtenerCliente(dato3).get();
+            }
+            RequestDispatcher dispatcher = request.getRequestDispatcher("TransferenciaCajas.jsp");
             dispatcher.forward(request, response);
-        }
-        }
-        }
+            
+            
+            } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCajero.jsp");
+            
+            dispatcher.forward(request, response);
+                }
+            }
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
