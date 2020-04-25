@@ -149,7 +149,6 @@ public class Trasferencia extends HttpServlet {
         movi2.setMonto(Double.valueOf(monto2));
         sm.insertarMovimiento(movi);
         sm.insertarMovimiento(movi2);
-
         sc.actualizaMonto(monto2, Cuenta2);
         sc.actualizaMonto(0 - monto, Cuenta1);
     }
