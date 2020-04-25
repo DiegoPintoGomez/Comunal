@@ -19,6 +19,11 @@ body{
     text-transform: uppercase;
 
 }
+.box p{
+    color: white;
+    text-transform: uppercase;
+
+}
 .box h2{
     color: white;
 

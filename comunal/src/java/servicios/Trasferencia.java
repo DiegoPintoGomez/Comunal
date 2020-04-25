@@ -7,13 +7,16 @@ package servicios;
 
 import Model.dao.ServicioCuenta;
 import Model.dao.ServicioFavorita;
+import Model.dao.ServicioMoneda;
 import Model.dao.ServicioMovimiento;
 import Model.dao.ServicioTransferencia;
+import Objetos.Moneda;
 import Objetos.Movimiento;
 import Objetos.favorita;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.Optional;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,21 +50,22 @@ public class Trasferencia extends HttpServlet {
                 String monto = request.getParameter("monto");
                 String detalle = request.getParameter("detalle");
                 ServicioCuenta c = new ServicioCuenta();
+
                 if (c.obtenerCuenta(Cuenta).get().getLimite_transferencia_diaria() < Double.valueOf(monto)) {
                     request.setAttribute("Mensaje", "El monto excede el limite diario de transferencia");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
                     dispatcher.forward(request, response);
-                }
-                if (c.obtenerCuenta(Cuenta).get().getSaldo_final()< Double.valueOf(monto)) {
-                    request.setAttribute("Mensaje","Fondos insuficientes");
+                }else if (c.obtenerCuenta(Cuenta).get().getSaldo_final() < Double.valueOf(monto)) {
+                    request.setAttribute("Mensaje", "Fondos insuficientes");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
                     dispatcher.forward(request, response);
+                } else {
+                    ServicioTransferencia st = new ServicioTransferencia();
+                    st.insertarTransferencia(Cuenta, favorita, monto);
+                    insertarmovimientos(Cuenta, favorita, Double.valueOf(monto), detalle);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
+                    dispatcher.forward(request, response);
                 }
-                ServicioTransferencia st = new ServicioTransferencia();
-                st.insertarTransferencia(Cuenta, favorita, monto);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("ExitosaCliente.jsp");
-                dispatcher.forward(request, response);
-                insertarmovimientos(Cuenta, favorita, Double.valueOf(monto), detalle);
 
             } catch (Exception e) {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorCliente.jsp");
@@ -123,9 +127,14 @@ public class Trasferencia extends HttpServlet {
     }// </editor-fold>
 
     void insertarmovimientos(String Cuenta1, String Cuenta2, double monto, String Detalle) {
+
         ServicioMovimiento sm = new ServicioMovimiento();
         ServicioCuenta sc = new ServicioCuenta();
+        ServicioMoneda smo = new ServicioMoneda();
+        Moneda m1 = smo.obtenerMoneda(sc.obtenerCuenta(Cuenta1).get().getMoneda_nombre()).get();
 
+        Moneda m = smo.obtenerMoneda(sc.obtenerCuenta(Cuenta2).get().getMoneda_nombre()).get();
+        double monto2 = m1.conversion(m1, m, monto);
         Movimiento movi = new Movimiento();
         Movimiento movi2 = new Movimiento();
         movi.setAplicado(1);
@@ -137,11 +146,11 @@ public class Trasferencia extends HttpServlet {
         movi.setMovimientocol(Detalle);
         movi2.setMovimientocol(Detalle);
         movi.setMonto(0 - Double.valueOf(monto));
-        movi2.setMonto(Double.valueOf(monto));
+        movi2.setMonto(Double.valueOf(monto2));
         sm.insertarMovimiento(movi);
         sm.insertarMovimiento(movi2);
 
-        sc.actualizaMonto(monto, Cuenta2);
+        sc.actualizaMonto(monto2, Cuenta2);
         sc.actualizaMonto(0 - monto, Cuenta1);
     }
 }
