@@ -49,7 +49,6 @@ public class AgregarCuenta extends HttpServlet {
         
         if(Cliente==1){
             int clave2=1;
-            
             String clave=Contrasenna.getPassword();
            String usuario =request.getParameter("Usuario");
            

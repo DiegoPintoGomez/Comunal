@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Lenovo
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login", "/Cerrar"})
+@WebServlet(name = "Login", urlPatterns = {"/Login", "/Cerrar", "/CambioC"})
 public class Login extends HttpServlet {
 
     /**
@@ -43,6 +43,24 @@ public class Login extends HttpServlet {
             sesion.invalidate();
             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
             dispatcher.forward(request, response);
+        } else if (request.getServletPath().equals("/CambioC")) {
+            HttpSession sesion = request.getSession();
+            String u = sesion.getAttribute("usuario").toString();
+            ServicioUsuario su = new ServicioUsuario();
+            Optional<Usuario> usu = su.obtenerUsuario(u);
+            if (usu.get().getClave_acceso().equals(request.getParameter("ClaveVieja"))) {
+                su.actualizaClave(request.getParameter("ClaveNueva"), u);
+                ServicioCliente sc = new ServicioCliente();
+                Optional<cliente> c = sc.obtenerCliente_id_usuario(u);
+                sesion.setAttribute("nombre", c.get().getNombre());
+                sesion.setAttribute("apellidos", c.get().getApellidos());
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("InicialCajero.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorInicio.jsp");
+                dispatcher.forward(request, response);
+            }
         } else {
             try {
                 String id = request.getParameter("id");
@@ -50,6 +68,12 @@ public class Login extends HttpServlet {
                 ServicioUsuario su = new ServicioUsuario();
                 Optional<Usuario> u = su.obtenerUsuario(id);
                 if (u.get().getClave_acceso().equals(clave)) {
+                    if (u.get().getClave_vencida() == 1) {
+                        HttpSession sesion = request.getSession(true);
+                        sesion.setAttribute("usuario", id);
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("CambioClave.jsp");
+                        dispatcher.forward(request, response);
+                    }
                     if (u.get().getRol() == 1) {
                         HttpSession sesion = request.getSession(true);
                         sesion.setAttribute("usuario", id);

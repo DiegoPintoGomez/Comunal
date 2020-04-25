@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <form class="box" action="Login" method="POST">
+        <form class="box" action="CambioC" method="POST">
             <h1>Cambio de clave</h1>
             <table class="">
                 <tbody>
@@ -23,7 +23,7 @@
                             <label for="ClaveVieja">Clave antigüa</label>
                         </td>
                         <td>
-                            <input type="password" name="ClaveVieja" placeholder="Usuario">
+                            <input type="password" name="ClaveVieja">
                         </td>
                     </tr>
                     <tr>
@@ -37,7 +37,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="submit" name="" value="Login">
+                            <input type="submit" name="" value="Cambiar clave">
                         </td>
                     </tr>
                 </tbody>
