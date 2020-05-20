@@ -14,6 +14,7 @@
              <% if(request.getAttribute("Mensaje")!=null){%>
              <h1><%=request.getAttribute("Mensaje")%></h1>
              <%}%>
+            
         </section>
     </body>
 </html>
